@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/students_menu"
+        android:title="Students" />
+    <item
+        android:id="@+id/add_student_menu"
+        android:title="Add Student" />
+    <item
+        android:id="@+id/add_test_menu"
+        android:title="Add Test" />
+    <item
+        android:id="@+id/add_questions_menu"
+        android:title="Add Question"
+        />
+    <item
+        android:id="@+id/add_exam_menu"
+        android:title="Add Exams" />
+    <item
+        android:id="@+id/take_quiz_menu"
+        android:title="Take Queiz" />
+    <item
+        android:id="@+id/bottom_navigation_activity"
+        android:title="Botton Nav" />
+</menu>

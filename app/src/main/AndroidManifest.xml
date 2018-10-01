@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tausif.abdulqadeer.a935studentcontactsqliteLND">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddStudentActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewQuestionsActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddQuestionActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddTestActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewTestActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.QuizActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.LoginActivity" android:label="@string/title_activity_login" >
+        </activity>
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ResultActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ManageTestActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddExamActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewStudentActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewClassesActivity" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.UpdateDeleteStudentActivity" />
+        <activity
+            android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewTestsActivity"
+            android:label="@string/title_activity_view_tests"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewAllTestsListActivity"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.abdulqadeer.a935studentcontactsqliteLND.AddExamActivity">
+
+    <LinearLayout
+        android:id="@+id/selectStudentLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Select Studdent"
+    android:textColor="#000"
+    android:textSize="20dp"
+    android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Class" />
+
+        <Spinner
+            android:id="@+id/select_class_for_exam_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Student" />
+
+        <Spinner
+            android:id="@+id/select_student_for_exam_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="#867a7a"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:text="Yet not selected."
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            android:id="@+id/student_detail_for_exam"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selectTestLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Test"
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Subject" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_subject_for_student_exam_spinner"></Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Chapter" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_chapter_for_student_exam_spinner"></Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Sections" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_sections_for_student_exam_spinner"></Spinner>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="#867a7a"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:text="Yet not selected."
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            android:id="@+id/test_detail_for_exam_id"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="Start Quiz"
+        android:id="@+id/start_from_exam_quiz_button"/>
+
+</LinearLayout>

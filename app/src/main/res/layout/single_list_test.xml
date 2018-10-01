@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#82f0f4"
+        android:padding="15dp"
+        android:text="Test Record"
+        android:textAlignment="center"
+        android:textSize="20dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:padding="10dp"
+        android:stretchColumns="@string/title_activity_login">
+
+        <TableRow>
+
+            <TextView android:text="Test Id: " />
+
+            <TextView
+                android:id="@+id/idForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Class: " />
+
+            <TextView
+                android:id="@+id/classForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Subject: " />
+
+            <TextView
+                android:id="@+id/subjectForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Chapter" />
+
+            <TextView
+                android:id="@+id/chapterForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Sections" />
+
+            <TextView
+                android:id="@+id/sectionsForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Date Time: " />
+
+            <TextView
+                android:id="@+id/dateTimeForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Total Time: " />
+
+            <TextView
+                android:id="@+id/totalTimeForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Total Questions: " />
+
+            <TextView
+                android:id="@+id/totalQuestionForTestListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>

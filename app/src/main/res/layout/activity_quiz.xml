@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#edd3d3"
+    android:orientation="vertical"
+    tools:context="com.example.abdulqadeer.a935studentcontactsqliteLND.QuizActivity">
+
+    <LinearLayout
+        android:id="@+id/student_and_test_detail_for_quiz_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/student_detail_for_quiz_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#94e490"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Student Detail"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/test_detail_for_quiz_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ed757b"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Test Detail"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/quiz_details_for_quiz_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/questions_and_time_detail_for_quiz_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/question_number_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="Question 1 of 10" />
+
+            <TextView
+                android:id="@+id/time_for_quiz_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Time Left: 10:00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/question_and_option_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/question_current_textView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@android:color/holo_green_light"
+                android:padding="10dp"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:id="@+id/options_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/option_a_and_b_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/optionA_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Option A" />
+
+                    <Button
+                        android:id="@+id/optionB_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Option B" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/option_c_and_d_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/optionC_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Option C" />
+
+                    <Button
+                        android:id="@+id/optionD_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Option D" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
