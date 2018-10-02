@@ -10,7 +10,8 @@
       "client_info": {
         "mobilesdk_app_id": "1:1053752632349:android:9cc2f9b0a0a89816",
         "android_client_info": {
-          "package_name": "www.tausifasia.com"
+//          "package_name": "www.tausifasia.com"
+          "package_name": "com.tausif.abdulqadeer.a935studentcontactsqliteLND"
         }
       },
       "oauth_client": [

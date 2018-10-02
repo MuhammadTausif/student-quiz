@@ -154,6 +154,9 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(this.getWritableDatabase());
     }
 
+    /**
+     * @param sqLiteDatabase SQLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(STUDENT_CREATE_TABLE);
@@ -161,13 +164,57 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(QUESTIONS_CREATE_TABLE);
         sqLiteDatabase.execSQL(EXAM_CREATE_TABLE);
         sqLiteDatabase.execSQL(RESULT_CREATE_TABLE);
+
+        /**
+         *  Method for initial seed.
+         */
+//        seedData();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-//        sqLiteDatabase.execSQL("DROP IF TABLE EXIST " + TEST_TABLE);
-//        onCreate(sqLiteDatabase);
+        //        sqLiteDatabase.execSQL("DROP IF TABLE EXIST " + TEST_TABLE);
+        //        onCreate(sqLiteDatabase);
     }
+
+    /**
+     * Method to seed the data at initial data logging.
+     */
+    public void seedData(){
+        // Inserting students
+        insertStudent("Aslam Khan", "Sulman Khan", "Kot", "322", 0, 1 );
+        insertStudent("Akram Khan", "Sulman Khan", "Kot", "322", 0, 2 );
+        insertStudent("Asghar Khan", "Sulman Khan", "Kot", "322", 0, 3 );
+
+        // Inserting Test
+        insertTest(0, "English", 1, "1", "01/01/2018", 10, 10);
+        insertTest(0, "English", 1, "2", "01/01/2018", 10, 10);
+        insertTest(0, "English", 1, "3", "01/01/2018", 10, 10);
+
+        // Inserting Questions to above test
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+    }
+
+
+
+    /**
+     * @param name Name of the student.
+     * @param fatherName Father Name of the student
+     * @param address Address of the student
+     * @param phone Phone number to whome student can be connected
+     * @param stdClass Student class
+     * @param roll_no roll number of the student.
+     * @return true if insert student is succesfull.
+     */
 
     // Students record manipulation methods
     public boolean insertStudent(String name, String fatherName, String address, String phone, int stdClass, int roll_no) {

@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,6 +22,11 @@
             android:background="#e4d428"
             android:textColor="#f00"
             android:padding="15dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -96,6 +102,7 @@
             android:layout_height="wrap_content"
             android:inputType="phone" />
 
+</LinearLayout>
 
         <Button
             android:id="@+id/update_btn_for_update_delete_student"

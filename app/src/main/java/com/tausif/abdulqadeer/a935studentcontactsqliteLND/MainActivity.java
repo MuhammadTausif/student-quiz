@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inflateFeilds();
         addActionListener();
 
+        // These lines of code are to seed the data when the application is created.
+        dbHelper = new DBHelper(this.getApplicationContext());
+        if(dbHelper.getAllStudentsRecords().size()<1){
+            dbHelper.seedData();
+        }
     }
 
     private void inflateFeilds() {
