@@ -45,7 +45,6 @@ public class TestListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         final Context parentContext = parent.getContext();
-
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(R.layout.single_list_test, parent, false);

@@ -443,9 +443,8 @@ public class DBHelperSpecific {
         }
         return testArrayList;
     }
-
     public ArrayList<Test> getAllTestsRecordsOfClass(String classTest){
-        String whereClause=" WHERE = "+ DBHelper.CLASS_TEST + " "+ classTest;
+        String whereClause=" WHERE "+ DBHelper.CLASS_TEST + " = "+ classTest;
         return getAllTestsRecords(whereClause);
     }
     public ArrayList<Test> getAllTestsRecordsOfClassAndSubject(String classTest, String subjectTest){
@@ -457,4 +456,53 @@ public class DBHelperSpecific {
                 + DBHelper.SUBJECT + " = "+ subjectTest + " AND "+ DBHelper.CHAPTER + " = " + chapterTest ;
         return getAllTestsRecords(whereClause);
     }
+    public boolean updateTest(Test test) {
+
+        int id = test.get_id();
+        String classTest = test.getClassTest();
+        String subject = test.getSubject();
+        String chapter = test.getChapter();
+        String sections = test.getSections();
+        String dateTime = test.getDataTime();
+        String totalTime = test.getTotalTime();
+        String totalQuestions = test.getTotalQuestions();
+
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.CLASS_TEST, classTest);
+        values.put(DBHelper.SUBJECT, subject);
+        values.put(DBHelper.CHAPTER, chapter);
+        values.put(DBHelper.SECTIONS, sections);
+        values.put(DBHelper.DATA_TIME, dateTime);
+        values.put(DBHelper.TOTAL_TIME, totalTime);
+        values.put(DBHelper.TOTAL_QUESTIONS, totalQuestions);
+
+        String where = DBHelper.ID_TEST_TABLE + " = " + id;
+
+        studentDB = dbHelper.getWritableDatabase();
+
+        int numberOfUpdatedRows = studentDB.update(DBHelper.TEST_TABLE, values, where, null);
+
+        if (numberOfUpdatedRows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean deleteTest(Test test) {
+
+        int id = test.get_id();
+
+        String where = DBHelper.ID_TEST_TABLE+ " = " + id;
+
+        studentDB = dbHelper.getWritableDatabase();
+
+        int numberOfDeletedRows = studentDB.delete(DBHelper.TEST_TABLE, where, null);
+
+        if (numberOfDeletedRows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -39,6 +39,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
     compile 'org.jetbrains:annotations-java5:15.0'
+    compile 'de.codecrafters.tableview:tableview:2.8.0'
     testCompile 'junit:junit:4.12'
 }
 

@@ -94,4 +94,17 @@ public class Test {
     public void setTotalQuestions(String totalQuestions) {
         this.totalQuestions = totalQuestions;
     }
+
+    @Override
+    public String toString() {
+        return "Test Detail\n ID: " + _id + "\n" +
+                "Class: " + classTest + "\n" +
+                "Subject: " + subject + "\n" +
+                "Chapter: " + chapter + "\n" +
+                "Sections: " + sections + "\n" +
+                "Date and Time: " + dataTime + "\n" +
+                "Total Time: " + totalTime + "\n" +
+                "Total Question: " + totalQuestions;
+    }
+
 }

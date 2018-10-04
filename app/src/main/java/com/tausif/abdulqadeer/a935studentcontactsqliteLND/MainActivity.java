@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent;
         switch (item.getItemId()) {
 
+            case R.id.home_menu:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+
             case R.id.students_menu:
                 intent = new Intent(getApplicationContext(), ViewClassesActivity.class);
                 startActivity(intent);

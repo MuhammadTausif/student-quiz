@@ -2,6 +2,10 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/home_menu"
+        android:title="Home" />
+
+    <item
         android:id="@+id/students_menu"
         android:title="Students" />
     <item
@@ -20,7 +24,5 @@
     <item
         android:id="@+id/take_quiz_menu"
         android:title="Take Queiz" />
-    <item
-        android:id="@+id/bottom_navigation_activity"
-        android:title="Botton Nav" />
+
 </menu>

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,59 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        Intent intent;
+        switch (item.getItemId()) {
+
+            case R.id.home_menu:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.students_menu:
+                intent = new Intent(getApplicationContext(), ViewClassesActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_student_menu:
+                intent = new Intent(getApplicationContext(), AddStudentActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_test_menu:
+                intent = new Intent(getApplicationContext(), AddTestActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_questions_menu:
+                int test=1;
+                intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_exam_menu:
+                intent = new Intent(getApplicationContext(), AddExamActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.take_quiz_menu:
+                intent = new Intent(getApplicationContext(), QuizActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void inflateFeilds() {
         // Text feild inflation.
         name = (EditText) findViewById(R.id.editTextNameForUpdateDelete);
@@ -70,7 +125,7 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
                         AlertMessage.ShowAlertMessage(UpdateDeleteStudentActivity.this, student.getName() + "not updated");
                     }
                 } else {
-                    AlertMessage.ShowAlertMessage(getApplicationContext(), "No key to update");
+                    AlertMessage.ShowAlertMessage(getApplicationContext(), "No key to updateButton");
                 }
 
             }
@@ -81,7 +136,7 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
                 if (studentIdForOperation != -1) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(UpdateDeleteStudentActivity.this);
-                    builder.setMessage("Are you sure to delete \n Student: " + student.getName());
+                    builder.setMessage("Are you sure to deleteButton \n Student: " + student.getName());
                     builder.setTitle("Delete Student...");
                     builder.setPositiveButton("Yes, Delete", new DialogInterface.OnClickListener() {
                         @Override
@@ -112,7 +167,7 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
                     dialog.show();
 
                 } else {
-                    AlertMessage.ShowAlertMessage(getApplicationContext(), "No key to update");
+                    AlertMessage.ShowAlertMessage(getApplicationContext(), "No key to updateButton");
                 }
 
             }

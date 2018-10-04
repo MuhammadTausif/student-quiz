@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/935StudentContactSQLite.iml" filepath="$PROJECT_DIR$/935StudentContactSQLite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\Data\Android\AndroidStudioProjects\935StudentContactSQLite\student-quiz.iml" filepath="D:\Data\Android\AndroidStudioProjects\935StudentContactSQLite\student-quiz.iml" />
     </modules>
   </component>
 </project>
