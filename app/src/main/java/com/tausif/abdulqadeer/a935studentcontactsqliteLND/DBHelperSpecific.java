@@ -304,6 +304,93 @@ public class DBHelperSpecific {
     }
 
     /**
+     * Functiono for quiz
+     *
+     * @return
+     */
+
+    // This method can change only the Question text, and Options. Test ID, class, subject, section, or chapter can not be changed
+    public Question getQuestionFromQuestionId(int questionId) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String tempQuery = "SELECT  * FROM " +
+                DBHelper.QUESTIONS_TABLE + " WHERE " +
+                DBHelper.ID_QUESTIONS_TABLE + " = " + questionId;
+
+        Cursor cursor = db.rawQuery(tempQuery, null);
+        cursor.moveToFirst();
+
+        Question tempQuestion = new Question();
+
+        if (cursor.getCount() > 0) {
+
+            int tempQuestionId = cursor.getInt(cursor.getColumnIndex(ID_QUESTIONS_TABLE));
+            String tempQuestionStr = cursor.getString(cursor.getColumnIndex(QUESTION));
+            String tempOptionAStr = cursor.getString(cursor.getColumnIndex(OPTION_A));
+            String tempOptionBStr = cursor.getString(cursor.getColumnIndex(OPTION_B));
+            String tempOptionCStr = cursor.getString(cursor.getColumnIndex(OPTION_C));
+            String tempOptionDStr = cursor.getString(cursor.getColumnIndex(OPTION_D));
+
+            tempQuestion.setQuestionId(tempQuestionId);
+            tempQuestion.setQuestion(tempQuestionStr);
+            tempQuestion.setOptionA(tempOptionAStr);
+            tempQuestion.setOptionB(tempOptionBStr);
+            tempQuestion.setOptionC(tempOptionCStr);
+            tempQuestion.setOptionD(tempOptionDStr);
+
+        }
+        cursor.close();
+        return tempQuestion;
+    }
+
+    public boolean updateQuestion(Question question) {
+
+        int id = question.getQuestionId();
+        String questionText = question.getQuestion();
+        String optionA = question.getOptionA();
+        String optionB = question.getOptionB();
+        String optionC = question.getOptionC();
+        String optionD = question.getOptionD();
+
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.QUESTION, questionText);
+        values.put(DBHelper.OPTION_A, optionA);
+        values.put(DBHelper.OPTION_B, optionB);
+        values.put(DBHelper.OPTION_C, optionC);
+        values.put(DBHelper.OPTION_D, optionD);
+
+        String where = DBHelper.ID_QUESTIONS_TABLE + " = " + id;
+
+        studentDB = dbHelper.getWritableDatabase();
+
+        int numberOfUpdatedRows = studentDB.update(DBHelper.QUESTIONS_TABLE, values, where, null);
+
+        if (numberOfUpdatedRows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteQuestion(Question question) {
+
+        int id = question.getQuestionId();
+
+        String where = DBHelper.ID_QUESTIONS_TABLE + " = " + id;
+
+        studentDB = dbHelper.getWritableDatabase();
+
+        int numberOfDeletedRows = studentDB.delete(DBHelper.QUESTIONS_TABLE, where, null);
+
+        if (numberOfDeletedRows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
      * Methods for student view class
      */
     // This method would get all students belonging to pereterized class
@@ -415,7 +502,7 @@ public class DBHelperSpecific {
     /**
      * Method for Test class
      */
-    public ArrayList<Test> getAllTestsRecords( String where) {
+    public ArrayList<Test> getAllTestsRecords(String where) {
 
         ArrayList<Test> testArrayList = new ArrayList<Test>();
         Test tempTest;
@@ -431,10 +518,10 @@ public class DBHelperSpecific {
                 tempTest.set_id(cursor.getInt(cursor.getColumnIndex(DBHelper.ID_TEST_TABLE)));
                 tempTest.setSubject(cursor.getString(cursor.getColumnIndex(DBHelper.SUBJECT)));
                 tempTest.setClassTest(String.valueOf(cursor.getInt(cursor.getColumnIndex(DBHelper.CLASS_TEST))));
-                tempTest.setChapter(String.valueOf( cursor.getInt(cursor.getColumnIndex(DBHelper.CHAPTER)) ));
-               tempTest.setSections(cursor.getString(cursor.getColumnIndex(DBHelper.SECTIONS)) );
-                tempTest.setDataTime( cursor.getString(cursor.getColumnIndex(DBHelper.DATA_TIME)) );
-                tempTest.setTotalTime(String.valueOf( cursor.getInt(cursor.getColumnIndex(DBHelper.TOTAL_TIME))) );
+                tempTest.setChapter(String.valueOf(cursor.getInt(cursor.getColumnIndex(DBHelper.CHAPTER))));
+                tempTest.setSections(cursor.getString(cursor.getColumnIndex(DBHelper.SECTIONS)));
+                tempTest.setDataTime(cursor.getString(cursor.getColumnIndex(DBHelper.DATA_TIME)));
+                tempTest.setTotalTime(String.valueOf(cursor.getInt(cursor.getColumnIndex(DBHelper.TOTAL_TIME))));
                 tempTest.setTotalQuestions(String.valueOf(cursor.getInt(cursor.getColumnIndex(DBHelper.TOTAL_QUESTIONS))));
 
                 testArrayList.add(tempTest);
@@ -443,19 +530,23 @@ public class DBHelperSpecific {
         }
         return testArrayList;
     }
-    public ArrayList<Test> getAllTestsRecordsOfClass(String classTest){
-        String whereClause=" WHERE "+ DBHelper.CLASS_TEST + " = "+ classTest;
+
+    public ArrayList<Test> getAllTestsRecordsOfClass(String classTest) {
+        String whereClause = " WHERE " + DBHelper.CLASS_TEST + " = " + classTest;
         return getAllTestsRecords(whereClause);
     }
-    public ArrayList<Test> getAllTestsRecordsOfClassAndSubject(String classTest, String subjectTest){
-        String whereClause=" WHERE = "+ DBHelper.CLASS_TEST + " "+ classTest + " AND " + DBHelper.SUBJECT + " = "+ subjectTest;
+
+    public ArrayList<Test> getAllTestsRecordsOfClassAndSubject(String classTest, String subjectTest) {
+        String whereClause = " WHERE = " + DBHelper.CLASS_TEST + " " + classTest + " AND " + DBHelper.SUBJECT + " = " + subjectTest;
         return getAllTestsRecords(whereClause);
     }
-    public ArrayList<Test> getAllTestsRecordsOfClassAndSubjectAndChapter(String classTest, String subjectTest, String chapterTest){
-        String whereClause=" WHERE = "+ DBHelper.CLASS_TEST + " "+ classTest + " AND "
-                + DBHelper.SUBJECT + " = "+ subjectTest + " AND "+ DBHelper.CHAPTER + " = " + chapterTest ;
+
+    public ArrayList<Test> getAllTestsRecordsOfClassAndSubjectAndChapter(String classTest, String subjectTest, String chapterTest) {
+        String whereClause = " WHERE = " + DBHelper.CLASS_TEST + " " + classTest + " AND "
+                + DBHelper.SUBJECT + " = " + subjectTest + " AND " + DBHelper.CHAPTER + " = " + chapterTest;
         return getAllTestsRecords(whereClause);
     }
+
     public boolean updateTest(Test test) {
 
         int id = test.get_id();
@@ -488,11 +579,12 @@ public class DBHelperSpecific {
             return false;
         }
     }
+
     public boolean deleteTest(Test test) {
 
         int id = test.get_id();
 
-        String where = DBHelper.ID_TEST_TABLE+ " = " + id;
+        String where = DBHelper.ID_TEST_TABLE + " = " + id;
 
         studentDB = dbHelper.getWritableDatabase();
 

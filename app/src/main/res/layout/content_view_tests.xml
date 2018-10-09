@@ -15,21 +15,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    >
+        app:layout_constraintTop_toTopOf="parent">
+
         <Button
             android:id="@+id/viewAllTestsListButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View All Tests"
-            />
+            android:text="View All Tests" />
 
         <ListView
             android:id="@+id/allClassesViewForTestsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:entries="@array/classes_list"
-            />
+            android:entries="@array/classes_list" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

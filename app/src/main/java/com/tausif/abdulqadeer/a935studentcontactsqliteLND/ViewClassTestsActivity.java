@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
     TableLayout tableLayout;
     Bundle extras;
     DBHelperSpecific dbHelperSpecific;
+    String idString="0";
 
     TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(
             TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT
@@ -127,7 +129,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         tableHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
 
         tableHeader.setLayoutParams(layoutParams);
-        String[] headerText = {"ID", "SUBJECT", "CHAPTER", "SECTIONS", "TOTAL QUESTION", "TOTAL TIME", "Action"};
+        String[] headerText = {"ID", "SUBJECT", "CHAPTER", "SECTIONS", "TOTAL TIME", "Questions", "Action"};
         for (String c : headerText) {
             TextView tv = new TextView(this);
             tv.setLayoutParams(
@@ -136,7 +138,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
             );
             tv.setGravity(Gravity.CENTER);
             tv.setTextSize(18);
-            tv.setPadding(5, 5, 5, 5);
+            tv.setPadding(5, 25, 5, 25);
             tv.setText(c);
             tableHeader.addView(tv);
         }
@@ -181,20 +183,31 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 sectionsTextView.setText(t.sections);
                 tableRow.addView(sectionsTextView);
 
-                // Adding Total Time to the row
-                TextView totalTimeTextView = getTextView();
-                totalTimeTextView.setText(t.totalTime);
-                tableRow.addView(totalTimeTextView);
-
                 // Adding Total Question to the row
                 TextView totalQuestionsTextView = getTextView();
                 totalQuestionsTextView.setText(t.totalQuestions);
                 tableRow.addView(totalQuestionsTextView);
 
+                // Adding questions action to the row.
+                TextView openQuestions = getTextView();
+                openQuestions.setText("Questions");
+                idString = Integer.toString(t._id);
+                openQuestions.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "View Questions : " + idString, Toast.LENGTH_SHORT).show();
+                        Intent questionsIntent = new Intent(ViewClassTestsActivity.this, ViewTestQuestionsListActivity.class);
+                        questionsIntent.putExtra("TEST_ID_FOR_QUESTIONS", Integer.toString(t._id));
+                        startActivity(questionsIntent);
+                    }
+                });
+                tableRow.addView(openQuestions);
+
+
                 // Adding Action to the table
                 TextView openTextView = getTextView();
                 openTextView.setText("Open");
-                final String idString = Integer.toString(t._id);
+                idString = Integer.toString(t._id);
                 openTextView.setOnClickListener(
                         new View.OnClickListener() {
                             @Override
@@ -232,7 +245,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         );
         tempTextView.setGravity(Gravity.CENTER);
         tempTextView.setTextSize(16);
-        tempTextView.setPadding(5, 15, 5, 15);
+        tempTextView.setPadding(5, 20, 5, 20);
 
         return tempTextView;
     }

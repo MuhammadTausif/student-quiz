@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewTestQuestionsListActivity"
+    tools:showIn="@layout/activity_view_test_questions_list">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/test_detail_textView_view_test_questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Test Detail: "
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/questions_count_textView_view_test_questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Questions"
+            android:textSize="25dp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/questionsList_table_view_test_questions"
+            android:stretchColumns="*">
+
+        </TableLayout>
+
+        <!--<de.codecrafters.tableview.TableView xmlns:table="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/tableView_for_test"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--table:tableView_columnCount="4"-->
+            <!--table:tableView_headerElevation="10" />-->
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

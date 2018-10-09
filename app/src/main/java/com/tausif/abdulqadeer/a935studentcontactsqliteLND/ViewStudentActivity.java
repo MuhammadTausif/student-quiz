@@ -1,6 +1,7 @@
 package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,9 +10,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
+import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 
 public class ViewStudentActivity extends AppCompatActivity {
 
@@ -20,10 +27,38 @@ public class ViewStudentActivity extends AppCompatActivity {
     Button addNewStudentButtonFromStudentsViewActivity, backToClassesButton;
     public static int CURRENT_CLASS_FOR_STUDENT_VIEW = 0;
 
+    private static final String[][] DATA_TO_SHOW = {
+            { "This", "is", "a", "test" },
+            { "This", "is", "a", "test" },
+            { "This", "is", "a", "test1" },
+            { "This", "is", "a", "test2" },
+            { "This", "is", "a", "test3" },
+            { "This", "is", "a", "test4" },
+            { "This", "is", "a", "test" },
+            { "This", "is", "a", "test5" },
+            { "and", "a", "second", "test" } };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_student);
+
+        // For testing of tableView ***000***
+
+        TableView<String[]> tableView = (TableView<String[]>) findViewById(R.id.tableView);
+        tableView.setDataAdapter(new SimpleTableDataAdapter(this, DATA_TO_SHOW));
+        // ***000***
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_student);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddStudentActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         inflateViews();
         attachStudentToList();
@@ -64,7 +99,7 @@ public class ViewStudentActivity extends AppCompatActivity {
                 return true;
 
             case R.id.add_questions_menu:
-                int test=1;
+                int test = 1;
                 intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
                 startActivity(intent);
                 return true;
@@ -99,7 +134,7 @@ public class ViewStudentActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             int classId = Integer.parseInt(extras.getString("CLASS_ID_FOR_STUDENTS"));
-             CURRENT_CLASS_FOR_STUDENT_VIEW = classId;
+            CURRENT_CLASS_FOR_STUDENT_VIEW = classId;
 
             ArrayList<Student> studentsObjArrayListOfClass = dbHelperSpecific.getAllStudentsOfSpecificClass(classId);
             ArrayList<String> studentsArrayListOfClass = new ArrayList<String>();
@@ -109,7 +144,7 @@ public class ViewStudentActivity extends AppCompatActivity {
                 studentsArrayListOfClass.add(s.toString());
             }
 
-            StudentListViewAdapter studentListViewAdapter=new StudentListViewAdapter(ViewStudentActivity.this,studentsObjArrayListOfClass);
+            StudentListViewAdapter studentListViewAdapter = new StudentListViewAdapter(ViewStudentActivity.this, studentsObjArrayListOfClass);
             ArrayAdapter studentArrayAdapter = new ArrayAdapter(ViewStudentActivity.this, android.R.layout.simple_list_item_1, studentsArrayListOfClass);
 
 //            studentListView.setAdapter(studentArrayAdapter);

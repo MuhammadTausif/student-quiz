@@ -19,7 +19,7 @@ public class ViewTestActivity extends Activity {
         setContentView(R.layout.activity_view_test);
 
 //        addAddTestBtn();
-//        inflateFeilds();
+//        inflateAndIntializeFeilds();
 //        addData();
 
     }

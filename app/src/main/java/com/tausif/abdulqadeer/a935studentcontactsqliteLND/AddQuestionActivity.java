@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,12 +26,15 @@ public class AddQuestionActivity extends AppCompatActivity {
     EditText question, optionA, optionB, optionC, optionD;
     Button saveQuestion;
     static int question_test_id = -1;
+    Bundle extras;
+    String test_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question);
 
+        getExtrasFromCallingClass();
         inflateFields();
         loadingSpinners();
         addListener();
@@ -71,7 +75,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                 return true;
 
             case R.id.add_questions_menu:
-                int test=1;
+                int test = 1;
                 intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
                 startActivity(intent);
                 return true;
@@ -88,6 +92,14 @@ public class AddQuestionActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    void getExtrasFromCallingClass() {
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            test_id = extras.getString("TEST_ID_FOR_NEW_QUESTION");
+            Toast.makeText(this, "Test ID: " + test_id, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -215,17 +227,27 @@ public class AddQuestionActivity extends AppCompatActivity {
         saveQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (test_id != null) {
+                    question_test_id = Integer.parseInt(test_id);
+                }
                 if (validateQuestionsInput()) {
-                    DBHelper dbHelper=new DBHelper(AddQuestionActivity.this);
+                    DBHelper dbHelper = new DBHelper(AddQuestionActivity.this);
 
-                    int tempTestID=question_test_id;
-                    String tempQuestion=question.getText().toString();
-                    String tempOptionA=optionA.getText().toString();
-                    String tempOptionB=optionB.getText().toString();
-                    String tempOptionC=optionC.getText().toString();
-                    String tempOptionD=optionD.getText().toString();
+                    int tempTestID = question_test_id;
+                    String tempQuestion = question.getText().toString();
+                    String tempOptionA = optionA.getText().toString();
+                    String tempOptionB = optionB.getText().toString();
+                    String tempOptionC = optionC.getText().toString();
+                    String tempOptionD = optionD.getText().toString();
 
-                    dbHelper.insertQuestion(tempTestID, tempQuestion, tempOptionA, tempOptionB, tempOptionC, tempOptionD);
+                    if (test_id != null) {
+                        dbHelper.insertQuestion( Integer.parseInt(test_id), tempQuestion, tempOptionA, tempOptionB, tempOptionC, tempOptionD);
+                        Intent testIntent = new Intent( AddQuestionActivity.this, ViewTestQuestionsListActivity.class);
+                        testIntent.putExtra("TEST_ID_FOR_QUESTIONS", test_id);
+                        startActivity(testIntent);
+                    } else {
+                        dbHelper.insertQuestion(tempTestID, tempQuestion, tempOptionA, tempOptionB, tempOptionC, tempOptionD);
+                    }
                     AlertMessage.ShowAlertMessage(AddQuestionActivity.this, "New question added");
                 } else {
                     AlertMessage.ShowAlertMessage(AddQuestionActivity.this, "Please select test and enter question along with options.");

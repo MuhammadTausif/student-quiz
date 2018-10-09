@@ -59,7 +59,7 @@ public class StudentListViewAdapter extends BaseAdapter {
         TextView fatherName = (TextView) convertView.findViewById(R.id.fatherNameForListItem);
         TextView address = (TextView) convertView.findViewById(R.id.addressForListItem);
         TextView phone = (TextView) convertView.findViewById(R.id.phoneForListItem);
-        TextView classStd = (TextView) convertView.findViewById(R.id.classStdForListItem);
+//        TextView classStd = (TextView) convertView.findViewById(R.id.classStdForListItem);
         TextView rollNo = (TextView) convertView.findViewById(R.id.rollNoForListItem);
 
         studentId = student.get_id();
@@ -67,7 +67,7 @@ public class StudentListViewAdapter extends BaseAdapter {
         fatherName.setText(student.getFatherName());
         address.setText(student.getAddress());
         phone.setText(student.getPhone());
-        classStd.setText(String.valueOf(student.getClassStd()));
+//        classStd.setText(String.valueOf(student.getClassStd()));
         rollNo.setText(String.valueOf(student.getRollNo()));
 
 

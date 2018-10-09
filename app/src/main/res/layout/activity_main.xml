@@ -14,9 +14,9 @@
         android:layout_margin="5dp"
         android:background="#878087"
         android:paddingBottom="30dp"
-        android:paddingTop="30dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
+        android:paddingTop="30dp"
         android:text="@string/Records"
         android:textAlignment="center"
         android:textColor="#fbe4dada"
@@ -27,9 +27,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/view_student_main_text_view"
@@ -59,79 +59,36 @@
             android:id="@+id/view_result_main_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="fill"
+            android:layout_weight="1"
             android:text="Result" />
+
+        <Button
+            android:id="@+id/new_button_mainActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New" />
+
 
     </LinearLayout>
 
-    <ScrollView
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:visibility="gone">
+        android:stretchColumns="*"
+        android:id="@+id/header_table_main">
+    </TableLayout>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <TableLayout
+            android:id="@+id/main_table_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Students" />
-
-            <ListView
-                android:id="@+id/students_record"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#0ff" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tests" />
-
-            <ListView
-                android:id="@+id/tests_record"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#c8e7b2" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Questions" />
-
-            <ListView
-                android:id="@+id/questions_record"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#edc0e7" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Exams" />
-
-            <ListView
-                android:id="@+id/exams_record"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#7596e9" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Results" />
-
-            <ListView
-                android:id="@+id/results_record"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#e9ae89" />
-
-        </LinearLayout>
+        </TableLayout>
     </ScrollView>
-
 </LinearLayout>
+
