@@ -27,27 +27,10 @@ public class ViewStudentActivity extends AppCompatActivity {
     Button addNewStudentButtonFromStudentsViewActivity, backToClassesButton;
     public static int CURRENT_CLASS_FOR_STUDENT_VIEW = 0;
 
-    private static final String[][] DATA_TO_SHOW = {
-            { "This", "is", "a", "test" },
-            { "This", "is", "a", "test" },
-            { "This", "is", "a", "test1" },
-            { "This", "is", "a", "test2" },
-            { "This", "is", "a", "test3" },
-            { "This", "is", "a", "test4" },
-            { "This", "is", "a", "test" },
-            { "This", "is", "a", "test5" },
-            { "and", "a", "second", "test" } };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_student);
-
-        // For testing of tableView ***000***
-
-        TableView<String[]> tableView = (TableView<String[]>) findViewById(R.id.tableView);
-        tableView.setDataAdapter(new SimpleTableDataAdapter(this, DATA_TO_SHOW));
-        // ***000***
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_student);

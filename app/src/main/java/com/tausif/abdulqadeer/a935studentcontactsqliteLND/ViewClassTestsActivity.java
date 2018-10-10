@@ -129,7 +129,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         tableHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
 
         tableHeader.setLayoutParams(layoutParams);
-        String[] headerText = {"ID", "SUBJECT", "CHAPTER", "SECTIONS", "TOTAL TIME", "Questions", "Action"};
+        String[] headerText = {"ID", "SUBJECT", "CHAPTER", "SECTIONS", "Questions", "Action"};
         for (String c : headerText) {
             TextView tv = new TextView(this);
             tv.setLayoutParams(
@@ -160,7 +160,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
 
             for (final Test t : testArrayList) {
                 TableRow tableRow = new TableRow(getApplicationContext());
-                tableRow.setBackgroundColor(Color.BLACK);
+                tableRow.setBackgroundResource(R.drawable.row_border);
                 tableRow.setLayoutParams(layoutParams);
 
                 // Adding id to the row
@@ -183,14 +183,13 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 sectionsTextView.setText(t.sections);
                 tableRow.addView(sectionsTextView);
 
-                // Adding Total Question to the row
-                TextView totalQuestionsTextView = getTextView();
-                totalQuestionsTextView.setText(t.totalQuestions);
-                tableRow.addView(totalQuestionsTextView);
-
                 // Adding questions action to the row.
                 TextView openQuestions = getTextView();
-                openQuestions.setText("Questions");
+                int questionAdded = dbHelperSpecific.getAllQuestionFromTestId(t.get_id()).size();
+                openQuestions.setText( questionAdded + "/" + t.getTotalQuestions());
+                if(questionAdded < Integer.parseInt( t.getTotalQuestions())){
+                    openQuestions.setTextColor(0xFFFF0000);
+                }
                 idString = Integer.toString(t._id);
                 openQuestions.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -202,7 +201,6 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                     }
                 });
                 tableRow.addView(openQuestions);
-
 
                 // Adding Action to the table
                 TextView openTextView = getTextView();
@@ -245,6 +243,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         );
         tempTextView.setGravity(Gravity.CENTER);
         tempTextView.setTextSize(16);
+        tempTextView.setTextColor(0xFF000000);
         tempTextView.setPadding(5, 20, 5, 20);
 
         return tempTextView;

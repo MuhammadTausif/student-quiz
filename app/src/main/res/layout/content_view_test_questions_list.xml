@@ -29,20 +29,24 @@
             android:text="Questions"
             android:textSize="25dp" />
 
-        <TableLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/questionsList_table_view_test_questions"
-            android:stretchColumns="*">
+            android:layout_height="match_parent">
 
-        </TableLayout>
+            <TableLayout
+                android:id="@+id/questionsList_table_view_test_questions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*">
 
+            </TableLayout>
+        </ScrollView>
         <!--<de.codecrafters.tableview.TableView xmlns:table="http://schemas.android.com/apk/res-auto"-->
-            <!--android:id="@+id/tableView_for_test"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--table:tableView_columnCount="4"-->
-            <!--table:tableView_headerElevation="10" />-->
+        <!--android:id="@+id/tableView_for_test"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--table:tableView_columnCount="4"-->
+        <!--table:tableView_headerElevation="10" />-->
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

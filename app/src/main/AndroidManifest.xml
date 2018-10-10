@@ -48,7 +48,11 @@
             android:label="@string/title_activity_view_test_questions_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UpdateDeleteQuestionActivity" />
-        <activity android:name=".Practice.PracticeActivity"></activity>
+        <activity android:name=".Practice.PracticeActivity" />
+        <activity
+            android:name=".ViewClassStudentsActivity"
+            android:label="@string/title_activity_view_class_student"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

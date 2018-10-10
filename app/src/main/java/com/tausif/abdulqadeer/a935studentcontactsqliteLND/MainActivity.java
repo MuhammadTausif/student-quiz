@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TableLayout mainTable, headerTable;
     TableLayout.LayoutParams layoutParams;
     DBHelperSpecific dbHelperSpecific;
+    ArrayList<StudentClass> classes;
     final static String[] CLASSES_NAME = {"Nursary", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
 
     @Override
@@ -60,6 +61,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newButtonMainActivity = (Button) findViewById(R.id.new_button_mainActivity);
         mainTable = (TableLayout) findViewById(R.id.main_table_main);
         headerTable = (TableLayout) findViewById(R.id.header_table_main);
+
+        // Creating classes
+        classes = new ArrayList<StudentClass>();
+        classes.add(new StudentClass(0, "Nursary"));
+        classes.add(new StudentClass(1, "One"));
+        classes.add(new StudentClass(2, "Two"));
+        classes.add(new StudentClass(3, "Three"));
+        classes.add(new StudentClass(4, "Four"));
+        classes.add(new StudentClass(5, "Five"));
+        classes.add(new StudentClass(6, "Six"));
+        classes.add(new StudentClass(7, "Seven"));
+        classes.add(new StudentClass(8, "Eight"));
+        classes.add(new StudentClass(9, "Nine"));
+        classes.add(new StudentClass(10, "Ten"));
 
         // Intializing list
         dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
@@ -191,50 +206,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Adding data to the Main Table
      */
     void addDataToTable() {
-        int i= 1;
         int tableBackgroundColor = 100;
-        for (String className : CLASSES_NAME) {
+        for (final StudentClass studentClass : classes) {
 
             // Intializing the Table Row
             TableRow tableRow = new TableRow(getApplicationContext());
-            tableRow.setBackgroundColor(Color.rgb(tableBackgroundColor,tableBackgroundColor,tableBackgroundColor));
+            tableRow.setBackgroundColor(Color.rgb(tableBackgroundColor, tableBackgroundColor, tableBackgroundColor));
             tableRow.setLayoutParams(layoutParams);
             tableRow.setBackgroundResource(R.drawable.row_border);
 
             // Adding class name to the row
             TextView classSrNumber = getTextView();
-            classSrNumber.setText(Integer.toString(i));
+            classSrNumber.setText(Integer.toString(studentClass.getSrialNo() + 1));
             tableRow.addView(classSrNumber);
 
             // Adding class name to the row
             TextView classNameTextView = getTextView();
-            classNameTextView.setText(className);
+            classNameTextView.setText(studentClass.getName());
             tableRow.addView(classNameTextView);
 
             // Adding total Students to the row
             TextView studentTextView = getTextView();
-            String numberOfStudent = Integer.toString(dbHelperSpecific.getAllStudentsOfSpecificClass(i).size());
+            String numberOfStudent = Integer.toString(dbHelperSpecific.getAllStudentsOfSpecificClass(studentClass.getSrialNo()).size());
             studentTextView.setText(numberOfStudent);
+            studentTextView.setBackgroundColor(0xEEEEEEEE);
+            studentTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Class: " + studentClass.getSrialNo(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ViewClassStudentsActivity.class);
+                    String classID = Integer.toString(studentClass.getSrialNo());
+                    intent.putExtra("CLASS_ID_FOR_STUDENTS", classID);
+                    startActivity(intent);
+
+                }
+            });
             tableRow.addView(studentTextView);
 
             // Adding Total Tests to the row
             TextView testTextView = getTextView();
-            String numberOfTests = Integer.toString(dbHelperSpecific.getAllTestsRecordsOfClass(Integer.toString(i)).size());
+            String numberOfTests = Integer.toString(dbHelperSpecific.getAllTestsRecordsOfClass(Integer.toString(studentClass.getSrialNo())).size());
             testTextView.setText(numberOfTests);
+            testTextView.setBackgroundColor(0xEEEEEEFF);
+            testTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), ViewClassTestsActivity.class);
+                    intent.putExtra("CLASS_ID_FOR_TESTS", Integer.toString(studentClass.getSrialNo()));
+                    startActivity(intent);
+                }
+            });
             tableRow.addView(testTextView);
-
-            i++;
 
             mainTable.addView(tableRow);
         }
     }
 
-
     private TextView getTextView() {
         // Creating TextView
         TextView tempTextView = new TextView(getApplicationContext());
+
         tempTextView.setLayoutParams(
-                new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                new TableRow.LayoutParams(
+                        TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT)
         );
         tempTextView.setGravity(Gravity.CENTER);
@@ -243,6 +277,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tempTextView.setTextColor(0xFF000000);
 
         return tempTextView;
+    }
+
+    private Button getButton() {
+        // Creating TextView
+        Button tempButton = new Button(getApplicationContext());
+        tempButton.setLayoutParams(
+                new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT)
+        );
+        tempButton.setGravity(Gravity.CENTER);
+        tempButton.setTextSize(16);
+        tempButton.setPadding(5, 20, 5, 20);
+        tempButton.setTextColor(0xFF000000);
+
+        return tempButton;
     }
 
 }

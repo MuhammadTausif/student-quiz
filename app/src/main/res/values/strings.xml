@@ -24,19 +24,19 @@
     </array>
 
     <string-array name="classes_name_list">
-        <item >Nur</item>
-        <item >One</item>
-        <item >Two</item>
-        <item >Three</item>
-        <item >Four</item>
-        <item >Five</item>
-        <item >Six</item>
-        <item >Seven</item>
-        <item >Eight</item>
-        <item >Nine</item>
-        <item >Ten</item>
-        <item >Nine Supper</item>
-        <item >Ten Supper</item>
+        <item>Nur</item>
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+        <item>Six</item>
+        <item>Seven</item>
+        <item>Eight</item>
+        <item>Nine</item>
+        <item>Ten</item>
+        <item>Nine Supper</item>
+        <item>Ten Supper</item>
     </string-array>
 
 
@@ -61,4 +61,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_update_delete_test">UpdateDeleteTestActivity</string>
     <string name="title_activity_view_test_questions_list">ViewTestQuestionsListActivity</string>
+    <string name="title_activity_view_class_student">ViewClassStudentActivity</string>
 </resources>

@@ -200,7 +200,8 @@ public class ViewTestQuestionsListActivity extends AppCompatActivity {
         if (extras != null) {
             for (final Question q : questions) {
                 TableRow tableRow = new TableRow(getApplicationContext());
-                tableRow.setBackgroundColor(Color.BLACK);
+                tableRow.setBackgroundResource(R.drawable.row_border);
+//                tableRow.setBackgroundColor(Color.BLACK);
                 tableRow.setLayoutParams(layoutParams);
 
                 // Adding id to the row
@@ -252,6 +253,7 @@ public class ViewTestQuestionsListActivity extends AppCompatActivity {
         tempTextView.setGravity(Gravity.CENTER);
         tempTextView.setTextSize(16);
         tempTextView.setPadding(5, 20, 5, 20);
+        tempTextView.setTextColor(0xFF000000);
 
         return tempTextView;
     }
