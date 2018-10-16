@@ -20,10 +20,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Database Tables
     public final static String STUDENT_TABLE = "students_table";
+    public final static String STUDENT_CLASS_TABLE = "student_class_table";
     public final static String TEST_TABLE = "test_table";
     public final static String QUESTIONS_TABLE = "questions_table";
     public final static String EXAM_TABLE = "exam_table";
     public final static String RESULT_TABLE = "result_table";
+
+    // Columns of STUDENT_CLASS_TABLE
+    public final static String ID_STUDENT_CLASS_TABLE = "_id";
+    public final static String STUDENT_CLASS_NAME = "name";
+    public final static String CLASS_INDEX = "class_index";
+    public final static String ACTIVE_TEST_ID = "active_test_id";
 
     // Columns of STUDENT_TABLE
     public final static String ID_STUDENT_TABLE = "_id";
@@ -87,6 +94,14 @@ public class DBHelper extends SQLiteOpenHelper {
                     ROLL_NO + " INTEGER ";
 
     String STUDENT_CREATE_TABLE = createTableStatement(STUDENT_TABLE, ID_STUDENT_TABLE, tempStudentTableCreate);
+
+    // Create STUDENT_CLASS_TBALE query
+    String tempStudentClassTableCreate =
+            STUDENT_CLASS_NAME + TEXT_TYPE +
+                    CLASS_INDEX + INTEGER_TYPE+
+                    ACTIVE_TEST_ID + " INTEGER ";
+
+    String STUDENT_CLASS_CREATE_TABLE = createTableStatement(STUDENT_CLASS_TABLE, ID_STUDENT_CLASS_TABLE, tempStudentClassTableCreate);
 
     // Create TEST_TBALE query
     String tempTestTableCreate =
@@ -160,6 +175,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(STUDENT_CREATE_TABLE);
+        sqLiteDatabase.execSQL(STUDENT_CLASS_CREATE_TABLE);
         sqLiteDatabase.execSQL(TEST_CREATE_TABLE);
         sqLiteDatabase.execSQL(QUESTIONS_CREATE_TABLE);
         sqLiteDatabase.execSQL(EXAM_CREATE_TABLE);
@@ -202,6 +218,20 @@ public class DBHelper extends SQLiteOpenHelper {
         insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
         insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
         insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+
+        // Inserting Classes
+        insertStudentClass("Nursary", 0 , -1);
+        insertStudentClass("One", 1 , -1);
+        insertStudentClass("Two", 2 , -1);
+        insertStudentClass("Three", 3 , -1);
+        insertStudentClass("Four", 4 , -1);
+        insertStudentClass("Five", 5 , -1);
+        insertStudentClass("Six", 6 , -1);
+        insertStudentClass("Seven", 7 , -1);
+        insertStudentClass("Eight", 8 , -1);
+        insertStudentClass("Nine", 9 , -1);
+        insertStudentClass("10", 10 , -1);
+
     }
 
 
@@ -262,6 +292,103 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 arrayList.add(builder.toString());
 //                arrayList.add(cursor.getString(cursor.getColumnIndex(CHAPTER)));
+                cursor.moveToNext();
+            }
+        }
+        return arrayList;
+    }
+
+    // Students' class record manipulation methods
+    public boolean insertStudentClass(String student_class_name, int class_index, int active_test_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(STUDENT_CLASS_NAME, student_class_name);
+        values.put(CLASS_INDEX, class_index);
+        values.put(ACTIVE_TEST_ID, active_test_id);
+
+        long insert_result = db.insert(STUDENT_CLASS_TABLE, null, values);
+
+        if (insert_result == -1) {
+            return false;
+        }
+        {
+            return true;
+        }
+    }
+
+    public ArrayList<String> getAllStudentsClassRecordsInString() {
+
+        ArrayList<String> arrayList = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + STUDENT_CLASS_TABLE, null);
+        cursor.moveToFirst();
+
+        StringBuilder builder = new StringBuilder();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                builder = new StringBuilder();
+                builder.append("ID: " + cursor.getInt(cursor.getColumnIndex(ID_STUDENT_CLASS_TABLE)) + "\n");
+                builder.append("Class Name: " + cursor.getString(cursor.getColumnIndex(STUDENT_CLASS_NAME)) + "\n");
+                builder.append("Class Index: " + cursor.getInt(cursor.getColumnIndex(CLASS_INDEX)) + "\n");
+                builder.append("Active Test ID: " + cursor.getInt(cursor.getColumnIndex(ACTIVE_TEST_ID)) + "\n");
+
+                arrayList.add(builder.toString());
+                cursor.moveToNext();
+            }
+        }
+        return arrayList;
+    }
+
+    public ArrayList<StudentClass> getAllStudentsClassRecords() {
+
+        ArrayList<StudentClass> arrayList = new ArrayList<StudentClass>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + STUDENT_CLASS_TABLE, null);
+        cursor.moveToFirst();
+
+//        StringBuilder builder = new StringBuilder();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                StudentClass studentClass = new StudentClass();
+                studentClass.set_id(cursor.getInt(cursor.getColumnIndex(ID_STUDENT_CLASS_TABLE)));
+                studentClass.setName(cursor.getString(cursor.getColumnIndex(STUDENT_CLASS_NAME)));
+                studentClass.setSrialNo(cursor.getInt(cursor.getColumnIndex(CLASS_INDEX)));
+                studentClass.setActiveTestID(cursor.getInt(cursor.getColumnIndex(ACTIVE_TEST_ID)));
+
+                arrayList.add(studentClass);
+                cursor.moveToNext();
+            }
+        }
+        return arrayList;
+    }
+
+    public ArrayList<StudentClass> getAllStudentsClassRecordsWhere(String where) {
+
+        ArrayList<StudentClass> arrayList = new ArrayList<StudentClass>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + STUDENT_CLASS_TABLE + " WHERE " + where, null);
+        cursor.moveToFirst();
+
+//        StringBuilder builder = new StringBuilder();
+        StudentClass studentClass = new StudentClass();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                studentClass.setName(cursor.getString(cursor.getColumnIndex(STUDENT_CLASS_NAME)));
+                studentClass.set_id(cursor.getInt(cursor.getColumnIndex(ID_STUDENT_CLASS_TABLE)));
+                studentClass.setSrialNo(cursor.getInt(cursor.getColumnIndex(CLASS_INDEX)));
+                studentClass.setActiveTestID(cursor.getInt(cursor.getColumnIndex(ACTIVE_TEST_ID)));
+
+                arrayList.add(studentClass);
                 cursor.moveToNext();
             }
         }

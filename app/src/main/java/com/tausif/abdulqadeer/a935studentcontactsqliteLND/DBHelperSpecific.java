@@ -3,6 +3,7 @@ package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ import static com.tausif.abdulqadeer.a935studentcontactsqliteLND.DBHelper.TEST_T
  */
 
 public class DBHelperSpecific {
+
+    // region Constructor and initializations
+
     private DBHelper dbHelper;
     private Context dbHelperSpecificContext;
     private SQLiteDatabase studentDB;
@@ -38,12 +42,98 @@ public class DBHelperSpecific {
         dbHelper = new DBHelper(context);
     }
 
+    // endregion
+
+    // region Methods for StudentClass
+
+    /**
+     * @param studentClass an StudentClass to be inserted.
+     * @return a true if insertion successfull.
+     */
+    public boolean insertStudentClass(StudentClass studentClass) {
+
+        if (dbHelper.insertStudentClass(studentClass.getName(), studentClass.getSrialNo(), studentClass.getActiveTestID())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return ArrayList of StudentClass
+     */
+    public ArrayList<StudentClass> getAllStudentClasses() {
+
+        return dbHelper.getAllStudentsClassRecords();
+    }
+
+    /**
+     * @param studentClassID of Student's class based on which a Student Class is returned
+     * @return a Student class based on the provied ID.
+     */
+    public StudentClass getStudentClass(int studentClassID) {
+        return dbHelper.getAllStudentsClassRecordsWhere(DBHelper.ID_STUDENT_CLASS_TABLE + "=" + studentClassID).get(0);
+    }
+
+    /**
+     * @param studentClassIndex of Student's class based on index/serialNo
+     * @return a Student class based on the provied index/serialNo.
+     */
+    public StudentClass getStudentClassFromClassIndex(int studentClassIndex) {
+        return dbHelper.getAllStudentsClassRecordsWhere(DBHelper.CLASS_INDEX + " = " + studentClassIndex).get(0);
+    }
+
+    public boolean updateStudentClass(StudentClass studentClass) {
+        int id = studentClass.get_id();
+        int classSerialNo = studentClass.getSrialNo();
+        String studentClassName = studentClass.getName();
+        int activeTestID = studentClass.getActiveTestID();
+
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.CLASS_INDEX, classSerialNo);
+        values.put(DBHelper.STUDENT_CLASS_NAME, studentClassName);
+        values.put(DBHelper.ACTIVE_TEST_ID, activeTestID);
+
+        String where = DBHelper.ID_STUDENT_CLASS_TABLE + " = " + id;
+
+        studentDB = dbHelper.getWritableDatabase();
+
+        int numberOfUpdatedRows = studentDB.update(DBHelper.STUDENT_CLASS_TABLE, values, where, null);
+
+        if (numberOfUpdatedRows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteStudentClass(int classStudentID) {
+
+        String where = DBHelper.ID_STUDENT_CLASS_TABLE + " = " + classStudentID;
+
+        studentDB = dbHelper.getWritableDatabase();
+
+        int numberOfDeletedRows = studentDB.delete(DBHelper.STUDENT_CLASS_TABLE, where, null);
+
+        if (numberOfDeletedRows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    // endregion
+
+    // region Old code for Test
+
     /**
      * Function for Select test for Add Question class
      *
      * @param classTest
      * @return
      */
+
     public ArrayList<String> getDistinctTestSubjects(int classTest) {
 
         ArrayList<String> classes = new ArrayList<>();
@@ -257,8 +347,12 @@ public class DBHelperSpecific {
         return testsForId;
     }
 
+    // endregion
+
+    // region Methods for Questions
+
     /**
-     * Functiono for quiz
+     * Function for quiz
      *
      * @return
      */
@@ -389,6 +483,9 @@ public class DBHelperSpecific {
         }
     }
 
+    // endregion
+
+    // region Method for Students
 
     /**
      * Methods for student view class
@@ -499,6 +596,12 @@ public class DBHelperSpecific {
         }
     }
 
+    // engregion
+
+    // endregion
+
+    // region Method for Tests
+
     /**
      * Method for Test class
      */
@@ -596,5 +699,7 @@ public class DBHelperSpecific {
             return false;
         }
     }
+
+    // endregion
 
 }

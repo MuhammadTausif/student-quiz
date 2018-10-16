@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.UpdateDeleteStudentClassActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="Update/Delete Student Class"
+                android:textSize="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="Serial No" />
+
+            <EditText
+                android:id="@+id/serialNo_editText_updateDeleteStudentClass"
+                android:layout_width="match_parent"
+                android:inputType="number"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <EditText
+                android:id="@+id/studentClassName_editText_updateDeleteStudentClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active Test ID" />
+
+            <EditText
+                android:id="@+id/activeTestID_editText_updateDeleteStudentClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Update"
+                    android:id="@+id/update_button_updateDeleteStudentClass"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Delete"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/delete_button_updateDeleteStudentClass"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Back"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/back_button_updateDeleteStudentClass"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

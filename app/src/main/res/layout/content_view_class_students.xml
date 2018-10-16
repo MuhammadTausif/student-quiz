@@ -52,25 +52,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:paddingLeft="10dp"
                         android:text="No" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
+                        android:gravity="start"
+                        android:paddingLeft="10dp"
                         android:text="Name" />
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:paddingLeft="10dp"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
+                        android:gravity="start"
                         android:text="Father Name" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Tests" />
+                        android:text="Score" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Quiz" />
+
 
                 </TableRow>
             </TableLayout>

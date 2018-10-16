@@ -62,4 +62,5 @@
     <string name="title_activity_update_delete_test">UpdateDeleteTestActivity</string>
     <string name="title_activity_view_test_questions_list">ViewTestQuestionsListActivity</string>
     <string name="title_activity_view_class_student">ViewClassStudentActivity</string>
+    <string name="title_activity_view_student_classes_list">ViewStudentClassesListActivity</string>
 </resources>

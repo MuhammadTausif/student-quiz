@@ -11,7 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,7 +29,10 @@ public class ViewClassTestsActivity extends AppCompatActivity {
     TableLayout tableLayout;
     Bundle extras;
     DBHelperSpecific dbHelperSpecific;
-    String idString="0";
+    String idString = "0";
+    ArrayList<RadioGroup> radioButtons = new ArrayList<RadioGroup>();
+    StudentClass studentClass;
+    int classId;
 
     TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(
             TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT
@@ -49,8 +55,8 @@ public class ViewClassTestsActivity extends AppCompatActivity {
             }
         });
 
-        inflateViews();
         getExtras();
+        inflateViews();
         addTableHeader();
 //        attachClassTestsToTable();
         addActionListener();
@@ -98,7 +104,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 return true;
 
             case R.id.add_questions_menu:
-                int test=1;
+                int test = 1;
                 intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
                 startActivity(intent);
                 return true;
@@ -122,6 +128,12 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         classTestTextView = (TextView) findViewById(R.id.class_test_text_test_view);
         classTestListView = (ListView) findViewById(R.id.class_tests_list_veiw_view_class_test);
         tableLayout = (TableLayout) findViewById(R.id.class_tests_table);
+
+        // Intialization
+        dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
+        classId = Integer.parseInt(extras.getString("CLASS_ID_FOR_TESTS"));
+
+        studentClass = dbHelperSpecific.getStudentClassFromClassIndex(classId);
     }
 
     private void addTableHeader() {
@@ -129,7 +141,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         tableHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
 
         tableHeader.setLayoutParams(layoutParams);
-        String[] headerText = {"ID", "SUBJECT", "CHAPTER", "SECTIONS", "Questions", "Action"};
+        String[] headerText = {"ID", "SUBJECT", "CHAPTER", "SECTIONS", "Questions", "Action", "Status"};
         for (String c : headerText) {
             TextView tv = new TextView(this);
             tv.setLayoutParams(
@@ -150,12 +162,12 @@ public class ViewClassTestsActivity extends AppCompatActivity {
     }
 
     private void attachClassTestsToTable() {
-        dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
+
         final Intent intent = getIntent();
+
         if (extras != null) {
-            int classId = Integer.parseInt(extras.getString("CLASS_ID_FOR_TESTS"));
             CURRENT_CLASS_FOR_CLASS_TESTS_VIEW = classId;
-            ArrayList<Test> testArrayList = dbHelperSpecific.getAllTestsRecordsOfClass(extras.getString("CLASS_ID_FOR_TESTS"));
+            final ArrayList<Test> testArrayList = dbHelperSpecific.getAllTestsRecordsOfClass(extras.getString("CLASS_ID_FOR_TESTS"));
             ArrayList<String> testsArrayListOfClass = new ArrayList<String>();
 
             for (final Test t : testArrayList) {
@@ -186,8 +198,8 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 // Adding questions action to the row.
                 TextView openQuestions = getTextView();
                 int questionAdded = dbHelperSpecific.getAllQuestionFromTestId(t.get_id()).size();
-                openQuestions.setText( questionAdded + "/" + t.getTotalQuestions());
-                if(questionAdded < Integer.parseInt( t.getTotalQuestions())){
+                openQuestions.setText(questionAdded + "/" + t.getTotalQuestions());
+                if (questionAdded < Integer.parseInt(t.getTotalQuestions())) {
                     openQuestions.setTextColor(0xFFFF0000);
                 }
                 idString = Integer.toString(t._id);
@@ -219,6 +231,32 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 );
                 tableRow.addView(openTextView);
 
+                // Adding Radio Button
+                final RadioGroup radioGroup = new RadioGroup(getApplicationContext());
+                final RadioButton status = new RadioButton(getApplicationContext());
+                radioGroup.setId(t.get_id());
+                radioButtons.add(radioGroup);
+                radioGroup.addView(status);
+                status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        Toast.makeText(getApplicationContext(),  Integer.toString(status.getId()) + "/"
+//                                + Integer.toString(radioGroup.getId()), Toast.LENGTH_SHORT).show();
+                        radioGroup.clearCheck();
+                        studentClass.setActiveTestID(t.get_id());
+                        dbHelperSpecific.updateStudentClass(studentClass);
+                        int tempId = dbHelperSpecific.getAllStudentClasses().get(0).getActiveTestID();
+                        Toast.makeText(getApplicationContext(), "Now Active Test is: " + tempId, Toast.LENGTH_SHORT).show();
+                        for(RadioGroup rg: radioButtons){
+                            if(rg.getId() != t.get_id()){
+                                rg.clearCheck();
+                            }
+                        }
+
+                    }
+                });
+                tableRow.addView(radioGroup);
+
                 // Adding row to the table
                 tableLayout.addView(tableRow);
                 testsArrayListOfClass.add(t.toString());
@@ -229,7 +267,8 @@ public class ViewClassTestsActivity extends AppCompatActivity {
 
             // Adding tests to the list, (Now it is disabled as the table layout is added.)
             // classTestListView.setAdapter(testListViewAdapter);
-            classTestTextView.setText("Class: " + classId);
+            classTestTextView.setText("Class: " + classId + "\n Total Tests: " + testArrayList.size() + "\n Active Test ID: ");
+            classTestTextView.setGravity(Gravity.CENTER);
         }
     }
 

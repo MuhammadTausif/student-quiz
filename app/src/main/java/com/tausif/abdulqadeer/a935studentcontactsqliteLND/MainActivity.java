@@ -1,33 +1,27 @@
 package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 
-import android.app.Dialog;
-
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // region Fields and Instances
     DBHelper dbHelper;
     ListView studentsListView, testsListView, questionsListView, examsListView, resultsListView;
     Button viewStudentBtn, viewTestBtn, viewExamBtn, viewResult, newButtonMainActivity;
@@ -37,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<StudentClass> classes;
     final static String[] CLASSES_NAME = {"Nursary", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
 
+    // endregion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (dbHelper.getAllStudentsRecords().size() < 1) {
             dbHelper.seedData();
         }
+
+        DBHelper db = new DBHelper(getApplicationContext());
+        ArrayList<String> classesList = db.getAllStudentsClassRecordsInString();
+        for (String student_class : classesList) {
+//            Toast.makeText(getApplicationContext(), student_class, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void inflateFeilds() {
@@ -63,21 +64,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headerTable = (TableLayout) findViewById(R.id.header_table_main);
 
         // Creating classes
-        classes = new ArrayList<StudentClass>();
-        classes.add(new StudentClass(0, "Nursary"));
-        classes.add(new StudentClass(1, "One"));
-        classes.add(new StudentClass(2, "Two"));
-        classes.add(new StudentClass(3, "Three"));
-        classes.add(new StudentClass(4, "Four"));
-        classes.add(new StudentClass(5, "Five"));
-        classes.add(new StudentClass(6, "Six"));
-        classes.add(new StudentClass(7, "Seven"));
-        classes.add(new StudentClass(8, "Eight"));
-        classes.add(new StudentClass(9, "Nine"));
-        classes.add(new StudentClass(10, "Ten"));
+//        classes = new ArrayList<StudentClass>();
+//        classes.add(new StudentClass(0, "Nursary"));
+//        classes.add(new StudentClass(1, "One"));
+//        classes.add(new StudentClass(2, "Two"));
+//        classes.add(new StudentClass(3, "Three"));
+//        classes.add(new StudentClass(4, "Four"));
+//        classes.add(new StudentClass(5, "Five"));
+//        classes.add(new StudentClass(6, "Six"));
+//        classes.add(new StudentClass(7, "Seven"));
+//        classes.add(new StudentClass(8, "Eight"));
+//        classes.add(new StudentClass(9, "Nine"));
+//        classes.add(new StudentClass(10, "Ten"));
 
         // Intializing list
         dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
+        classes = dbHelperSpecific.getAllStudentClasses();
         String[] classesNameList = getResources().getStringArray(R.array.classes_name_list);
 
         // Setting layout parameter
@@ -91,8 +93,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewTestBtn.setOnClickListener(this);
         viewExamBtn.setOnClickListener(this);
         viewResult.setOnClickListener(this);
+        newButtonMainActivity.setOnClickListener(this);
     }
 
+    // region Option Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -146,6 +150,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    // endregion
+
     @Override
     public void onClick(View v) {
         Intent intent;
@@ -168,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // This is new doing
             case R.id.new_button_mainActivity:
                 // do some thing
+                LaunchingClass = ViewStudentClassesListActivity.class;
                 Toast.makeText(this, "New is touched.", Toast.LENGTH_SHORT).show();
                 break;
         }

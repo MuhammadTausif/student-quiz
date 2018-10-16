@@ -52,7 +52,14 @@
         <activity
             android:name=".ViewClassStudentsActivity"
             android:label="@string/title_activity_view_class_student"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.StudentClasses.ViewStudentClassesListActivity"
+            android:label="@string/title_activity_view_student_classes_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.StudentClasses.NewStudentClassActivity" />
+        <activity android:name=".Activities.StudentClasses.P.MainPActivity" />
+        <activity android:name=".Activities.StudentClasses.UpdateDeleteStudentClassActivity"></activity>
     </application>
 
 </manifest>

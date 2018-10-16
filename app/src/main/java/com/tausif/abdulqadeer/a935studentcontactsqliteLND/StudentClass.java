@@ -7,10 +7,10 @@ package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 public class StudentClass {
 
     // Columns of Student Class
-    public int _id;
-    public int srialNo;
-    public String name;
-
+    private int _id;
+    private int srialNo;
+    private String name;
+    private int activeTestID;
 
     public StudentClass() {
     }
@@ -18,6 +18,13 @@ public class StudentClass {
     public StudentClass(int srialNo, String name) {
         this.srialNo = srialNo;
         this.name = name;
+        this.activeTestID = -1;
+    }
+
+    public StudentClass(int srialNo, String name, int activeTestID) {
+        this.srialNo = srialNo;
+        this.name = name;
+        this.activeTestID = activeTestID;
     }
 
     public StudentClass(int _id, int srialNo, String name) {
@@ -48,6 +55,14 @@ public class StudentClass {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getActiveTestID() {
+        return activeTestID;
+    }
+
+    public void setActiveTestID(int activeTestID) {
+        this.activeTestID = activeTestID;
     }
 
     @Override
