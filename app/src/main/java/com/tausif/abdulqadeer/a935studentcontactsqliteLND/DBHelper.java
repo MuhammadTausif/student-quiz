@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    // region Database, Tables, and Columns Names
     // Database
     public final static String SCHOOL_DB = "school_db";
 
@@ -80,6 +81,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public final static String Q9_ANSWER = "q9_answer";
     public final static String Q10_ANSWER = "q10_answer";
 
+    // endregion
+
+    // region Create Table Quries
 
     private final String INTEGER_TYPE = " INTEGER, ";
     private final String TEXT_TYPE = " TEXT, ";
@@ -158,8 +162,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 columns +
                 " )";
     }
+    // endregion
 
-
+    // region Constructors
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
         super(context, name, factory, version, errorHandler);
     }
@@ -168,6 +173,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, SCHOOL_DB, null, 1);
         onCreate(this.getWritableDatabase());
     }
+    // endregion
 
     /**
      * @param sqLiteDatabase SQLiteDatabase
@@ -234,8 +240,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-
-
     /**
      * @param name Name of the student.
      * @param fatherName Father Name of the student
@@ -245,8 +249,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param roll_no roll number of the student.
      * @return true if insert student is succesfull.
      */
-
-    // Students record manipulation methods
+    // region Students record manipulation methods
     public boolean insertStudent(String name, String fatherName, String address, String phone, int stdClass, int roll_no) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -297,8 +300,9 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return arrayList;
     }
+    // endregion
 
-    // Students' class record manipulation methods
+    // region Students' class record manipulation methods
     public boolean insertStudentClass(String student_class_name, int class_index, int active_test_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -395,7 +399,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    // Test record manipulation methods
+    // endregion
+
+    // region Test record manipulation methods
     public boolean insertTest(int class_test, String subject, int chapter, String sections, String dateTime, int totalTime, int totalQuestions) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -448,8 +454,9 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return arrayList;
     }
+    // endregion
 
-    // Questions record manipulation methods
+    // region Questions record manipulation methods
     public boolean insertQuestion(int test_id_f, String question, String optionA, String optionB, String optionC, String optionD) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -500,8 +507,9 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return arrayList;
     }
+    // endregion
 
-    // Questions record manipulation methods
+    // region Exam record manipulation methods
     public long insertExam(String data_time, int exam_test_id, int exam_student_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -548,7 +556,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    // Questions record manipulation methods
+    // endregion
+
+    // region Result record manipulation methods
     public boolean insertResult(int result_exam_id, String q1_answer, String q2_answer, String q3_answer, String q4_answer, String q5_answer, String q6_answer, String q7_answer, String q8_answer, String q9_answer, String q10_answer) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -609,4 +619,39 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return arrayList;
     }
+
+    public ArrayList<Result> getResultOfWhere(String where){
+
+        ArrayList<Result> resultsArrayList = new ArrayList<Result>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + RESULT_TABLE + " WHERE " + where, null);
+        cursor.moveToFirst();
+
+        Result result = new Result();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                result.set_id(cursor.getInt(cursor.getColumnIndex(ID_RESULT_TABLE)));
+                result.setExam_id(cursor.getInt(cursor.getColumnIndex(RESULT_EXAM_ID_F)));
+                result.setAnsQ1(cursor.getString(cursor.getColumnIndex(Q1_ANSWER)));
+                result.setAnsQ2(cursor.getString(cursor.getColumnIndex(Q2_ANSWER)));
+                result.setAnsQ3(cursor.getString(cursor.getColumnIndex(Q3_ANSWER)));
+                result.setAnsQ4(cursor.getString(cursor.getColumnIndex(Q4_ANSWER)));
+                result.setAnsQ5(cursor.getString(cursor.getColumnIndex(Q5_ANSWER)));
+                result.setAnsQ6(cursor.getString(cursor.getColumnIndex(Q6_ANSWER)));
+                result.setAnsQ7(cursor.getString(cursor.getColumnIndex(Q7_ANSWER)));
+                result.setAnsQ8(cursor.getString(cursor.getColumnIndex(Q8_ANSWER)));
+                result.setAnsQ9(cursor.getString(cursor.getColumnIndex(Q9_ANSWER)));
+                result.setAnsQ10(cursor.getString(cursor.getColumnIndex(Q10_ANSWER)));
+
+                resultsArrayList.add(result);
+                cursor.moveToNext();
+            }
+        }
+        return resultsArrayList;
+    }
+
+    // endregion
 }

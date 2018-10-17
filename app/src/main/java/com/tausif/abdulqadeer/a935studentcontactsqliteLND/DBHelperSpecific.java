@@ -702,4 +702,12 @@ public class DBHelperSpecific {
 
     // endregion
 
+    // region Result Table methods
+    public Result getResultOfExamID(int examID){
+        Result result = dbHelper.getResultOfWhere(DBHelper.RESULT_EXAM_ID_F + "=" + examID).get(0);
+        return result;
+    }
+
+    // endregion
+
 }

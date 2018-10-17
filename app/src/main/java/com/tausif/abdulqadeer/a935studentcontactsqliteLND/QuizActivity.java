@@ -1,5 +1,6 @@
 package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // region Fields and Instances
+
+    Context context;
+    DBHelperSpecific dbHelperSpecific;
     TextView studentDetailForQuizTextDisplay, testDetailForQuizTextDisplay;
 
-    TextView questionCurrentTextView;
+    TextView questionCurrentTextView, questionNumberTextView;
     ArrayList<Question> questionsListForQuiz;
 
     Button optionAButton, optionBButton, optionCButton, optionDButton;
@@ -26,19 +36,31 @@ public class QuizActivity extends AppCompatActivity {
     int questionIdForCurrentQuestion;
     String[] tempOptionsForQuestion = {null, null, null, null};
     String[] resultOfQuiz = {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"};
-    int globalResultOfQuizStringIncreament=0;
+    int globalResultOfQuizStringIncreament = 0;
+
+    Bundle extras;
+    Intent intent;
+
+    // Reference IDs and instances
+    int studentID, studentClassIndex, activeTestID, totalQuestions, currentQustionIndex;
+    long examID;
+    StudentClass studentClass;
+    Student student;
+    Test test;
+
+    // endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         inflateFields();
-        getIntentExtras();
-        getQuestionList();
+        getIntentExtrasAndIntializeData();
         produceRandomQuestions();
         addActionListener();
     }
 
+    // region Option Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -72,7 +94,7 @@ public class QuizActivity extends AppCompatActivity {
                 return true;
 
             case R.id.add_questions_menu:
-                int test=1;
+                int test = 1;
                 intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
                 startActivity(intent);
                 return true;
@@ -91,34 +113,47 @@ public class QuizActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    // endregion
 
-    private void checkCorrectOption(View view){
+    private void checkCorrectOption(View view) {
+        // Checking the correct Option
         TextView tempOptionView = (TextView) view;
         String tempOptionString = tempOptionView.getText().toString();
         if (tempOptionString == tempOptionsForQuestion[0]) {
-            AlertMessage.ShowAlertMessage(QuizActivity.this, "Correct A");
-            resultOfQuiz[globalResultOfQuizStringIncreament]=questionIdForCurrentQuestion+"A";
+//            AlertMessage.ShowAlertMessage(QuizActivity.this, "Correct A");
+            ToastMessage.ShowToastMessage(context, "Correct");
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "A";
             globalResultOfQuizStringIncreament++;
         } else if (tempOptionString == tempOptionsForQuestion[1]) {
-            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong B");
-            resultOfQuiz[globalResultOfQuizStringIncreament]=questionIdForCurrentQuestion+"B";
+//            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong B");
+            ToastMessage.ShowToastMessage(context, "Wrong");
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "B";
             globalResultOfQuizStringIncreament++;
 
         } else if (tempOptionString == tempOptionsForQuestion[2]) {
-            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong C");
+//            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong C");
+            ToastMessage.ShowToastMessage(context, "Wrong");
 
-            resultOfQuiz[globalResultOfQuizStringIncreament]=questionIdForCurrentQuestion+"C";
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "C";
             globalResultOfQuizStringIncreament++;
         } else if (tempOptionString == tempOptionsForQuestion[3]) {
-            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong D");
-
-            resultOfQuiz[globalResultOfQuizStringIncreament]=questionIdForCurrentQuestion+"D";
+//            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong D");
+            ToastMessage.ShowToastMessage(context, "Wrong");
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "D";
             globalResultOfQuizStringIncreament++;
         }
-
     }
 
+    // Action Listeners single method
     private void addActionListener() {
+        optionAButton.setOnClickListener(this);
+        optionBButton.setOnClickListener(this);
+        optionCButton.setOnClickListener(this);
+        optionDButton.setOnClickListener(this);
+    }
+
+    // This is old action Listener for each method
+    private void addActionListenerOld() {
         optionAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,14 +237,14 @@ public class QuizActivity extends AppCompatActivity {
             questionsListForQuiz.remove(questionCurrent);
         } else {
             AlertMessage.ShowAlertMessage(QuizActivity.this, "No Question.");
-            StringBuilder sb=new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (String s :
                     resultOfQuiz) {
                 sb.append(s).append(",");
             }
             AlertMessage.ShowAlertMessage(QuizActivity.this, sb.toString());
-            DBHelper dbHelper=new DBHelper(QuizActivity.this);
-            dbHelper.insertResult(examIdForQuiz,
+            DBHelper dbHelper = new DBHelper(QuizActivity.this);
+            boolean status = dbHelper.insertResult(examIdForQuiz,
                     resultOfQuiz[0],
                     resultOfQuiz[1],
                     resultOfQuiz[2],
@@ -221,6 +256,9 @@ public class QuizActivity extends AppCompatActivity {
                     resultOfQuiz[8],
                     resultOfQuiz[9]
             );
+            if(status){
+                ToastMessage.ShowToastMessage(context, "Data Inserted");
+            }
         }
     }
 
@@ -236,55 +274,118 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void getQuestionList() {
-        if (testIdForQuiz != -1) {
-            DBHelperSpecific dbHelperSpecific = new DBHelperSpecific(QuizActivity.this);
-
-            questionsListForQuiz = dbHelperSpecific.getAllQuestionFromTestId(testIdForQuiz);
-        }
+        questionsListForQuiz = dbHelperSpecific.getAllQuestionFromTestId(activeTestID);
     }
 
     private void inflateFields() {
         studentDetailForQuizTextDisplay = (TextView) findViewById(R.id.student_detail_for_quiz_text_view);
         testDetailForQuizTextDisplay = (TextView) findViewById(R.id.test_detail_for_quiz_text_view);
+        questionNumberTextView = (TextView) findViewById(R.id.question_number_textView);
 
+        // Current Question Text
         questionCurrentTextView = (TextView) findViewById(R.id.question_current_textView);
 
+        // Current Question Options
         optionAButton = (Button) findViewById(R.id.optionA_button);
         optionBButton = (Button) findViewById(R.id.optionB_button);
         optionCButton = (Button) findViewById(R.id.optionC_button);
         optionDButton = (Button) findViewById(R.id.optionD_button);
 
+        // Array of Questions
         questionsListForQuiz = new ArrayList<Question>();
+
+        // Reference variables
         testIdForQuiz = -1;
         questionIdForCurrentQuestion = -1;
-        examIdForQuiz=-1;
+        examIdForQuiz = -1;
     }
 
-    private void getIntentExtras() {
-        Bundle extras = getIntent().getExtras();
+    private void getIntentExtrasAndIntializeData() {
+        extras = getIntent().getExtras();
         if (extras != null) {
-            String tempStudentName = extras.get("studentName").toString();
-            String tempStudentClass = extras.get("studentClass").toString();
-            String tempStudentRollNo = extras.get("studentRollNo").toString();
-            testIdForQuiz = Integer.parseInt(extras.get("test_id").toString());
-            examIdForQuiz=Integer.parseInt(extras.get("exam_id").toString());
+            // Getting extras from Student calling class
+            studentClassIndex = extras.getInt("STUDENT_CLASS_ID_FOR_QUIZ");
+            studentID = extras.getInt("STUDENT_ID_FOR_QUIZ");
 
-            studentDetailForQuizTextDisplay.setText(tempStudentName +
-                    " ( " +
-                    "Class: " + tempStudentClass +
-                    ", Roll No: " + tempStudentRollNo +
-                    " )");
-
-            String tempTestSubject = extras.get("testSubject").toString();
-            String tempTestChapter = extras.get("testChapter").toString();
-            String tempTestSections = extras.get("testSections").toString();
-
-            testDetailForQuizTextDisplay.setText(
-                    tempTestSubject +
-                            " ( " +
-                            "Chapter: " + tempTestChapter +
-                            ", Sections: " + tempTestSections +
-                            " )");
+            intializeData();
         }
+    }
+
+    private void intializeData() {
+
+        context = getApplicationContext();
+        dbHelperSpecific = new DBHelperSpecific(context);
+        studentClass = dbHelperSpecific.getStudentClassFromClassIndex(studentClassIndex);
+        activeTestID = studentClass.getActiveTestID();
+        questionsListForQuiz = dbHelperSpecific.getAllQuestionFromTestId(activeTestID);
+
+        // Intializing the number of questions
+        currentQustionIndex = 1;
+        totalQuestions = questionsListForQuiz.size();
+
+        questionNumberTextView.setText("Question " + currentQustionIndex + "/" + totalQuestions);
+
+        // Inserting Quiz Exam
+        examID = dataInsertedIntoExamTable();
+
+        // old extras
+//        String tempStudentName = extras.get("studentName").toString();
+//        String tempStudentClass = extras.get("studentClass").toString();
+//        String tempStudentRollNo = extras.get("studentRollNo").toString();
+//        testIdForQuiz = Integer.parseInt(extras.get("test_id").toString());
+//        examIdForQuiz=Integer.parseInt(extras.get("exam_id").toString());
+//
+//        studentDetailForQuizTextDisplay.setText(tempStudentName +
+//                " ( " +
+//                "Class: " + tempStudentClass +
+//                ", Roll No: " + tempStudentRollNo +
+//                " )");
+//
+//        String tempTestSubject = extras.get("testSubject").toString();
+//        String tempTestChapter = extras.get("testChapter").toString();
+//        String tempTestSections = extras.get("testSections").toString();
+//
+//        testDetailForQuizTextDisplay.setText(
+//                tempTestSubject +
+//                        " ( " +
+//                        "Chapter: " + tempTestChapter +
+//                        ", Sections: " + tempTestSections +
+//                        " )");
+
+    }
+
+    private long dataInsertedIntoExamTable() {
+        DBHelper dbHelper = new DBHelper(context);
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+        long statusForInsertion = dbHelper.insertExam(date, studentID, activeTestID);
+        examIdForQuiz = (int) statusForInsertion;
+        // Temp code for checking start
+        if (statusForInsertion != -1) {
+//            AlertMessage.ShowAlertMessage(context, date + "\nExam ID: " + statusForInsertion + "\nStudent ID: " + studentID + " \nTest ID: " + activeTestID);
+            ToastMessage.ShowToastMessage(context, "Starting Exam");
+        } else {
+//            AlertMessage.ShowAlertMessage(context, "No inserted.");
+            ToastMessage.ShowToastMessage(context, "Could not start Exam");
+        }
+        // Temp code for checking end
+
+        return statusForInsertion;
+    }
+
+    @Override
+    public void onClick(View v) {
+        checkCorrectOption(v);
+        produceRandomQuestions();
+
+        if (currentQustionIndex == totalQuestions) {
+
+            intent = new Intent(context, ResultActivity.class);
+            intent.putExtra("EXAM_ID_FOR_RESULT", examIdForQuiz);
+            startActivity(intent);
+        }
+        // Incrementing the Current Question Number
+        currentQustionIndex++;
+        questionNumberTextView.setText("Question " + currentQustionIndex + "/" + totalQuestions);
+
     }
 }

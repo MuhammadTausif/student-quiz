@@ -1,5 +1,6 @@
 package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +9,28 @@ import android.view.MenuItem;
 
 public class ResultActivity extends AppCompatActivity {
 
+    // region Fields and Instances
+    int examID;
+    Bundle extras;
+    Result result;
+    Test test;
+    Student student;
+    StudentClass studentClass;
+    Intent intent;
+    Context context;
+    DBHelperSpecific dbHelperSpecific;
+    // endregion abd== and
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        getExtras();
+        inflateFieldsAndIntialization();
     }
 
+    // region Option Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -66,5 +83,19 @@ public class ResultActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    // endregion
 
+    void getExtras(){
+        extras = getIntent().getExtras();
+        if(extras != null){
+            examID = extras.getInt("EXAM_ID_FOR_RESULT");
+        }
+    }
+    void inflateFieldsAndIntialization(){
+        context = getApplicationContext();
+        dbHelperSpecific = new DBHelperSpecific(context);
+
+        // getting result of exam
+        result = dbHelperSpecific.getResultOfExamID(examID);
+    }
 }
