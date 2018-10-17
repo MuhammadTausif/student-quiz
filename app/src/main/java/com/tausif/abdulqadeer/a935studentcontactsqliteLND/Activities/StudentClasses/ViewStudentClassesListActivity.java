@@ -37,6 +37,7 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
     TableLayout studentClassesListTable;
     DBHelperSpecific dbHelperSpecific;
     ArrayList<StudentClass> studentClasses;
+    TableLayout.LayoutParams layoutParams;
     // endregion
 
     @Override
@@ -47,6 +48,7 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         inflateAndIntialize();
+        addTableHeader();
         attachStudentClassesListToTable();
 
         // region Floating action Button
@@ -62,6 +64,15 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
             }
         });
         // endregion
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        studentClasses = dbHelperSpecific.getAllStudentClasses();
+        studentClassesListTable.removeAllViews();
+        addTableHeader();
+        attachStudentClassesListToTable();
     }
 
     // region Option Menu
@@ -124,6 +135,37 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
         studentClassesListTable = (TableLayout) findViewById(R.id.studentClassesList_table_viewStudentClassesList);
         dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
         studentClasses = dbHelperSpecific.getAllStudentClasses();
+
+        // Setting layout parameter
+        layoutParams = new TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT
+        );
+
+    }
+
+    /**
+     * Adding header to the table.
+     */
+    void addTableHeader() {
+        TableRow tableHeader = new TableRow(getApplicationContext());
+        tableHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
+
+        // Creating table header
+        tableHeader.setLayoutParams(layoutParams);
+        String[] headerText = {"ID", "Serial NO", "Name", "Active Test ID", "Students", "Tests"};
+        for (String c : headerText) {
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(
+                    new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                            TableRow.LayoutParams.WRAP_CONTENT)
+            );
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(18);
+            tv.setPadding(5, 25, 5, 25);
+            tv.setText(c);
+            tableHeader.addView(tv);
+        }
+        studentClassesListTable.addView(tableHeader);
     }
 
     void attachStudentClassesListToTable() {
@@ -230,6 +272,5 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
 
         return tempTextView;
     }
-
 
 }

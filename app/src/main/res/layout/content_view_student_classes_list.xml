@@ -36,37 +36,37 @@
                 android:layout_height="wrap_content"
                 android:stretchColumns="*">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#e0e0e0"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                <!--<TableRow-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="#e0e0e0"-->
+                    <!--android:paddingBottom="10dp"-->
+                    <!--android:paddingTop="10dp">-->
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="ID" />
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="ID" />-->
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Serial No" />
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Serial No" />-->
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Name" />
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Name" />-->
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Active Test ID" />
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Active Test ID" />-->
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Students" />
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Students" />-->
 
-                    <TextView
-                        android:gravity="center"
-                        android:text="Tests" />
-                </TableRow>
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Tests" />-->
+                <!--</TableRow>-->
 
             </TableLayout>
         </ScrollView>

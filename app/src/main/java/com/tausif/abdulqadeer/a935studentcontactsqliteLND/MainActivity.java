@@ -63,20 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainTable = (TableLayout) findViewById(R.id.main_table_main);
         headerTable = (TableLayout) findViewById(R.id.header_table_main);
 
-        // Creating classes
-//        classes = new ArrayList<StudentClass>();
-//        classes.add(new StudentClass(0, "Nursary"));
-//        classes.add(new StudentClass(1, "One"));
-//        classes.add(new StudentClass(2, "Two"));
-//        classes.add(new StudentClass(3, "Three"));
-//        classes.add(new StudentClass(4, "Four"));
-//        classes.add(new StudentClass(5, "Five"));
-//        classes.add(new StudentClass(6, "Six"));
-//        classes.add(new StudentClass(7, "Seven"));
-//        classes.add(new StudentClass(8, "Eight"));
-//        classes.add(new StudentClass(9, "Nine"));
-//        classes.add(new StudentClass(10, "Ten"));
-
         // Intializing list
         dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
         classes = dbHelperSpecific.getAllStudentClasses();

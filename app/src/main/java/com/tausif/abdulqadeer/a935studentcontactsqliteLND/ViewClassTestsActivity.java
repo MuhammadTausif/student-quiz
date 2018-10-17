@@ -20,10 +20,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+
 import java.util.ArrayList;
 
 public class ViewClassTestsActivity extends AppCompatActivity {
 
+    // region Fields and Instances
     ListView classTestListView;
     TextView classTestTextView;
     TableLayout tableLayout;
@@ -32,11 +35,14 @@ public class ViewClassTestsActivity extends AppCompatActivity {
     String idString = "0";
     ArrayList<RadioGroup> radioButtons = new ArrayList<RadioGroup>();
     StudentClass studentClass;
+    int activeTestID;
     int classId;
 
     TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(
             TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT
     );
+
+    // endregion
 
     public static int CURRENT_CLASS_FOR_CLASS_TESTS_VIEW = 0;
 
@@ -45,15 +51,16 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_class_tests);
 
+        // region Floating Action Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_test_for_class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddTestActivity.class);
                 startActivity(intent);
-
             }
         });
+        // endregion
 
         getExtras();
         inflateViews();
@@ -134,6 +141,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         classId = Integer.parseInt(extras.getString("CLASS_ID_FOR_TESTS"));
 
         studentClass = dbHelperSpecific.getStudentClassFromClassIndex(classId);
+        activeTestID = studentClass.getActiveTestID();
     }
 
     private void addTableHeader() {
@@ -235,26 +243,41 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 final RadioGroup radioGroup = new RadioGroup(getApplicationContext());
                 final RadioButton status = new RadioButton(getApplicationContext());
                 radioGroup.setId(t.get_id());
+                if (activeTestID == t.get_id()) {
+                    radioGroup.check(status.getId());
+                }
+
                 radioButtons.add(radioGroup);
                 radioGroup.addView(status);
+                int tempTotalQuestionsAdded = dbHelperSpecific.getAllQuestionFromTestId(t.get_id()).size();
+                int tempTotalQuestions = Integer.parseInt( t.getTotalQuestions());
+                if(tempTotalQuestions!=tempTotalQuestionsAdded){
+                    status.setEnabled(false);
+                }
+
                 status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        Toast.makeText(getApplicationContext(),  Integer.toString(status.getId()) + "/"
-//                                + Integer.toString(radioGroup.getId()), Toast.LENGTH_SHORT).show();
                         radioGroup.clearCheck();
                         studentClass.setActiveTestID(t.get_id());
-                        dbHelperSpecific.updateStudentClass(studentClass);
-                        int tempId = dbHelperSpecific.getAllStudentClasses().get(0).getActiveTestID();
-                        Toast.makeText(getApplicationContext(), "Now Active Test is: " + tempId, Toast.LENGTH_SHORT).show();
-                        for(RadioGroup rg: radioButtons){
-                            if(rg.getId() != t.get_id()){
+                        if (isChecked) {
+                            boolean check = dbHelperSpecific.updateStudentClass(studentClass);
+                        }
+                        for (RadioGroup rg : radioButtons) {
+                            if (rg.getId() != t.get_id()) {
                                 rg.clearCheck();
                             }
                         }
-
+                        // For going back to calling Student Class List activity
+//                        Intent intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
+//                        startActivity(intent);
                     }
                 });
+                int tempTestID = t.get_id();
+                activeTestID = dbHelperSpecific.getStudentClass(studentClass.get_id()).getActiveTestID();
+                if (activeTestID == tempTestID) {
+//                    radioGroup.check(status.getId());
+                }
                 tableRow.addView(radioGroup);
 
                 // Adding row to the table

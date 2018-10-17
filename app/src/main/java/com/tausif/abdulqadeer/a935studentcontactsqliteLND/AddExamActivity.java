@@ -33,6 +33,7 @@ public class AddExamActivity extends AppCompatActivity {
         addListener();
     }
 
+    // region Option Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -85,6 +86,8 @@ public class AddExamActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    // endregion
 
     private void inflateFields() {
         classExam = (Spinner) findViewById(R.id.select_class_for_exam_spinner);

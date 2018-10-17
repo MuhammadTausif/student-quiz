@@ -14,28 +14,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".MainActivity"
+            android:label="MainActivity">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-        <activity android:name=".AddStudentActivity" />
+        <activity
+            android:name=".AddStudentActivity"
+            android:label="AddStudentActivity" />
         <activity android:name=".ViewQuestionsActivity" />
-        <activity android:name=".AddQuestionActivity" />
-        <activity android:name=".AddTestActivity" />
-        <activity android:name=".ViewTestActivity" />
-        <activity android:name=".QuizActivity" />
+        <activity
+            android:name=".AddQuestionActivity"
+            android:label="AddQuestionActivity" />
+        <activity
+            android:name=".AddTestActivity"
+            android:label="AddTestActivity" />
+        <activity
+            android:name=".ViewTestActivity"
+            android:label="ViewTestActivity" />
+        <activity
+            android:name=".QuizActivity"
+            android:label="QuizActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".ManageTestActivity" />
-        <activity android:name=".AddExamActivity" />
-        <activity android:name=".ViewStudentActivity" />
-        <activity android:name=".ViewClassesActivity" />
-        <activity android:name=".UpdateDeleteStudentActivity" />
+        <activity
+            android:name=".ResultActivity"
+            android:label="ResultActivity" />
+        <activity
+            android:name=".ManageTestActivity"
+            android:label="ManageTestActivity" />
+        <activity
+            android:name=".AddExamActivity"
+            android:label="AddExamActivity" />
+        <activity
+            android:name=".ViewStudentActivity"
+            android:label="ViewStudentActivity" />
+        <activity
+            android:name=".ViewClassesActivity"
+            android:label="ViewClassesActivity" />
+        <activity
+            android:name=".UpdateDeleteStudentActivity"
+            android:label="UpdateDeleteStudentActivity" />
         <activity
             android:name=".ViewTestsActivity"
             android:label="@string/title_activity_view_tests"
@@ -47,8 +71,12 @@
             android:name=".ViewTestQuestionsListActivity"
             android:label="@string/title_activity_view_test_questions_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UpdateDeleteQuestionActivity" />
-        <activity android:name=".Practice.PracticeActivity" />
+        <activity
+            android:name=".UpdateDeleteQuestionActivity"
+            android:label="UpdateDeleteQuestionActivity" />
+        <activity
+            android:name=".Practice.PracticeActivity"
+            android:label="Practice.PracticeActivity" />
         <activity
             android:name=".ViewClassStudentsActivity"
             android:label="@string/title_activity_view_class_student"
@@ -56,10 +84,20 @@
         <activity
             android:name=".Activities.StudentClasses.ViewStudentClassesListActivity"
             android:label="@string/title_activity_view_student_classes_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.StudentClasses.NewStudentClassActivity" />
-        <activity android:name=".Activities.StudentClasses.P.MainPActivity" />
-        <activity android:name=".Activities.StudentClasses.UpdateDeleteStudentClassActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.StudentClasses.NewStudentClassActivity"
+            android:label="Activities.StudentClasses.NewStudentClassActivity" />
+        <!--<activity android:name=".Activities.StudentClasses.P.MainPActivity" />-->
+        <activity
+            android:name=".Activities.StudentClasses.UpdateDeleteStudentClassActivity"
+            android:label="Activities.StudentClasses.UpdateDeleteStudentClassActivity"></activity>
     </application>
 
 </manifest>
