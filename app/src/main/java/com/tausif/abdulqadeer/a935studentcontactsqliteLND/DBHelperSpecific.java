@@ -491,6 +491,12 @@ public class DBHelperSpecific {
      * Methods for student view class
      */
     // This method would get all students belonging to pereterized class
+
+    public Student getStudentFromStudentID(int studentID){
+        Student student = dbHelper.getStudentsOfWhere(DBHelper.ID_STUDENT_TABLE + "=" + studentID).get(0);
+        return student;
+    }
+
     public ArrayList<Student> getAllStudentsOfSpecificClass(int classStd) {
 
         ArrayList<Student> studentsArrayList = new ArrayList<Student>();
@@ -634,6 +640,11 @@ public class DBHelperSpecific {
         return testArrayList;
     }
 
+    public Test getTestFromID(int testID){
+        Test test = dbHelper.getTestsWhere(DBHelper.ID_TEST_TABLE + "=" + testID).get(0);
+        return test;
+    }
+
     public ArrayList<Test> getAllTestsRecordsOfClass(String classTest) {
         String whereClause = " WHERE " + DBHelper.CLASS_TEST + " = " + classTest;
         return getAllTestsRecords(whereClause);
@@ -700,6 +711,21 @@ public class DBHelperSpecific {
         }
     }
 
+    // endregion
+
+    // region Exam Table methods
+    public Exam getExamFromExamID(int examID){
+        Exam exam = dbHelper.getAllExamWhere(DBHelper.ID_EXAM_TABLE + "=" + examID).get(0);
+        return exam;
+    }
+    public ArrayList<Exam> getExamsFromTestId(int testID){
+        ArrayList<Exam> exams = dbHelper.getAllExamWhere(DBHelper.EXAM_TEST_ID_F + "=" + testID);
+        return exams;
+    }
+    public ArrayList<Exam> getExamsFromStudentID(int studentID){
+        ArrayList<Exam> exams = dbHelper.getAllExamWhere(DBHelper.EXAM_STUDENT_ID_F + "=" + studentID);
+        return exams;
+    }
     // endregion
 
     // region Result Table methods

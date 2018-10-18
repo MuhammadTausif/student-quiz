@@ -271,6 +271,33 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public ArrayList<Student> getStudentsOfWhere(String where){
+        ArrayList<Student> studentsArrayList = new ArrayList<Student>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + STUDENT_TABLE + " WHERE " + where, null);
+        cursor.moveToFirst();
+
+        Student student = new Student();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                student.set_id(cursor.getInt(cursor.getColumnIndex(ID_STUDENT_TABLE)));
+                student.setClassStd(cursor.getInt(cursor.getColumnIndex(STD_CLASS)));
+                student.setRollNo(cursor.getInt(cursor.getColumnIndex(ROLL_NO)));
+                student.setName(cursor.getString(cursor.getColumnIndex(NAME)));
+                student.setFatherName(cursor.getString(cursor.getColumnIndex(FATHER_NAME)));
+                student.setAddress(cursor.getString(cursor.getColumnIndex(ADDRESS)));
+                student.setPhone(cursor.getString(cursor.getColumnIndex(PHONE)));
+
+                studentsArrayList.add(student);
+                cursor.moveToNext();
+            }
+        }
+        return studentsArrayList;
+    }
+
     public ArrayList<String> getAllStudentsRecords() {
 
         ArrayList<String> arrayList = new ArrayList<String>();
@@ -424,6 +451,34 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public ArrayList<Test> getTestsWhere(String where){
+        ArrayList<Test> testsArrayList = new ArrayList<Test>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TEST_TABLE + " WHERE " + where, null);
+        cursor.moveToFirst();
+
+        Test test = new Test();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                test.set_id(cursor.getInt(cursor.getColumnIndex(ID_TEST_TABLE)));
+                test.setClassTest(cursor.getString(cursor.getColumnIndex(CLASS_TEST)));
+                test.setSubject(cursor.getString(cursor.getColumnIndex(SUBJECT)));
+                test.setChapter(cursor.getString(cursor.getColumnIndex(CHAPTER)));
+                test.setSections(cursor.getString(cursor.getColumnIndex(SECTIONS)));
+                test.setDataTime(cursor.getString(cursor.getColumnIndex(DATA_TIME)));
+                test.setTotalTime(cursor.getString(cursor.getColumnIndex(TOTAL_TIME)));
+                test.setTotalQuestions(cursor.getString(cursor.getColumnIndex(TOTAL_QUESTIONS)));
+
+                testsArrayList.add(test);
+                cursor.moveToNext();
+            }
+        }
+        return testsArrayList;
+    }
+
     public ArrayList<String> getAllTestsRecords() {
 
         ArrayList<String> arrayList = new ArrayList<String>();
@@ -529,7 +584,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //        }
     }
 
-    public ArrayList<String> getAllExamsRecords() {
+    public ArrayList<String> getAllExamsRecordsInStrings() {
 
         ArrayList<String> arrayList = new ArrayList<String>();
 
@@ -554,6 +609,30 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return arrayList;
+    }
+
+    public ArrayList<Exam> getAllExamWhere(String where){
+        ArrayList<Exam> examsArrayList = new ArrayList<Exam>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + EXAM_TABLE + " WHERE " + where, null);
+        cursor.moveToFirst();
+
+        Exam exam= new Exam();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                exam.setId(cursor.getInt(cursor.getColumnIndex(ID_EXAM_TABLE)));
+                exam.setExamDate(cursor.getString(cursor.getColumnIndex(DATA_TIME)));
+                exam.setStudentID(cursor.getInt(cursor.getColumnIndex(EXAM_STUDENT_ID_F)));
+                exam.setTestID(cursor.getInt(cursor.getColumnIndex(EXAM_TEST_ID_F)));
+
+                examsArrayList.add(exam);
+                cursor.moveToNext();
+            }
+        }
+        return examsArrayList;
     }
 
     // endregion

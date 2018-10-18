@@ -1,157 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.tausif.abdulqadeer.a935studentcontactsqliteLND.Practice.ToggleButtonGroupTableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/radGroup1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:stretchColumns="*"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="#edd3d3"
+    android:orientation="vertical">
 
-    <TableRow>
-
-        <RadioButton
-            android:id="@+id/rad1"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button1"
-            android:textSize="13px" />
-
-        <RadioButton
-            android:id="@+id/rad2"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button2"
-            android:textSize="13px" />
-
-        <RadioButton
-            android:id="@+id/rad3"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button3"
-            android:textSize="13px" />
-    </TableRow>
-
-    <TableRow>
-
-        <RadioButton
-            android:id="@+id/rad4"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button1"
-            android:textSize="13px" />
-
-        <RadioButton
-            android:id="@+id/rad5"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button2"
-            android:textSize="13px" />
-
-        <RadioButton
-            android:id="@+id/rad6"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button3"
-            android:textSize="13px" />
-    </TableRow>
-
-    <TableRow>
-
-        <RadioButton
-            android:id="@+id/rad7"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button1"
-            android:textSize="13px" />
-
-        <RadioButton
-            android:id="@+id/rad8"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button2"
-            android:textSize="13px" />
-
-        <RadioButton
-            android:id="@+id/rad9"
-            android:layout_width="105px"
-            android:layout_height="wrap_content"
-            android:text="Button3"
-            android:textSize="13px" />
-    </TableRow>
-
-    <TableRow
+    <TextView
+        android:id="@+id/studentDetail_textView_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/row_border"
-        >
-        <com.tausif.abdulqadeer.a935studentcontactsqliteLND.Practice.RadioGridGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Student Detail"
+        android:textSize="25dp" />
 
-            <TableRow android:layout_marginTop="@dimen/preview_five">
+    <TextView
+        android:id="@+id/testDetail_textView_result"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Test Detail"
+        android:textSize="20dp" />
 
-                <RadioButton
-                    android:id="@+id/rad10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button1" />
+    <TextView
+        android:id="@+id/resultSummary_textView_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Result Summry"
+        android:textSize="20dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:id="@+id/resultDetail_table_result">
 
-                <RadioButton
-                    android:id="@+id/rad11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button2" />
-            </TableRow>
-
-            <TableRow android:layout_marginTop="@dimen/preview_five">
-
-                <RadioButton
-                    android:id="@+id/rad12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button3" />
-
-                <RadioButton
-                    android:id="@+id/rad13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button4" />
-            </TableRow>
-
-            <TableRow android:layout_marginTop="@dimen/preview_five">
-
-                <RadioButton
-                    android:id="@+id/rad14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button5" />
-
-                <RadioButton
-                    android:id="@+id/rad15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button6" />
-            </TableRow>
-
-            <TableRow android:layout_marginTop="@dimen/preview_five">
-
-                <RadioButton
-                    android:id="@+id/rad16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button7" />
-
-                <RadioButton
-                    android:id="@+id/rad17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button8" />
-            </TableRow>
-        </com.tausif.abdulqadeer.a935studentcontactsqliteLND.Practice.RadioGridGroup>
-
-    </TableRow>
-</com.tausif.abdulqadeer.a935studentcontactsqliteLND.Practice.ToggleButtonGroupTableLayout >
-
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--tools:context="com.example.abdulqadeer.a935studentcontactsqliteLND.ResultActivity">-->
-
-    <!--</android.support.constraint.ConstraintLayout>-->
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>
