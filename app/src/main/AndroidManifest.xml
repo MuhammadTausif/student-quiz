@@ -17,11 +17,13 @@
         <activity
             android:name=".MainActivity"
             android:label="MainActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".AddStudentActivity"
@@ -94,10 +96,11 @@
         <activity
             android:name=".Activities.StudentClasses.NewStudentClassActivity"
             android:label="Activities.StudentClasses.NewStudentClassActivity" />
-        <!--<activity android:name=".Activities.StudentClasses.P.MainPActivity" />-->
+        <!-- <activity android:name=".Activities.StudentClasses.P.MainPActivity" /> -->
         <activity
             android:name=".Activities.StudentClasses.UpdateDeleteStudentClassActivity"
-            android:label="Activities.StudentClasses.UpdateDeleteStudentClassActivity"></activity>
+            android:label="Activities.StudentClasses.UpdateDeleteStudentClassActivity" />
+        <activity android:name=".Activities.Result.StudentResultsListActivity"></activity>
     </application>
 
 </manifest>

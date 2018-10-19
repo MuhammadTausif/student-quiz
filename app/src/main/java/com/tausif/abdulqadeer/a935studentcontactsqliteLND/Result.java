@@ -6,7 +6,9 @@ package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 
 public class Result {
     private int _id;
-    private int exam_id;
+    private int test_id;
+    private int student_id;
+    private String dateTime;
     private String ansQ1;
     private String ansQ2;
     private String ansQ3;
@@ -17,6 +19,7 @@ public class Result {
     private String ansQ8;
     private String ansQ9;
     private String ansQ10;
+    private String resultPercentage;
 
     public int get_id() {
         return _id;
@@ -26,12 +29,28 @@ public class Result {
         this._id = _id;
     }
 
-    public int getExam_id() {
-        return exam_id;
+    public int getTest_id() {
+        return test_id;
     }
 
-    public void setExam_id(int exam_id) {
-        this.exam_id = exam_id;
+    public void setTest_id(int test_id) {
+        this.test_id = test_id;
+    }
+
+    public int getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getAnsQ1() {
@@ -113,4 +132,13 @@ public class Result {
     public void setAnsQ3(String ansQ3) {
         this.ansQ3 = ansQ3;
     }
+
+    public String getResultPercentage() {
+        return resultPercentage;
+    }
+
+    public void setResultPercentage(String resultPercentage) {
+        this.resultPercentage = resultPercentage;
+    }
+
 }

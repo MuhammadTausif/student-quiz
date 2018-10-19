@@ -729,9 +729,13 @@ public class DBHelperSpecific {
     // endregion
 
     // region Result Table methods
-    public Result getResultOfExamID(int examID){
-        Result result = dbHelper.getResultOfWhere(DBHelper.RESULT_EXAM_ID_F + "=" + examID).get(0);
+    public Result getResultOfExamID(int resultID){
+        Result result = dbHelper.getResultOfWhere(DBHelper.ID_RESULT_TABLE + "=" + resultID).get(0);
         return result;
+    }
+    public ArrayList<Result> getResultOfStudentID(int studentID){
+        ArrayList<Result>  results = dbHelper.getResultOfWhere(DBHelper.RESULT_STUDENT_ID_F + "=" + studentID);
+        return results;
     }
 
     // endregion

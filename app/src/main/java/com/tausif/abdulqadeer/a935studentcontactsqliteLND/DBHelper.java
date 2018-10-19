@@ -69,7 +69,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Columns of RESULT_TABLE
     public final static String ID_RESULT_TABLE = "_id";
-    public final static String RESULT_EXAM_ID_F = "exam_id";
+    public final static String RESULT_TEST_ID_F = "test_id";
+    public final static String RESULT_STUDENT_ID_F = "student_id";
+    public final static String RESULT_DATE_TIME = "date_times";
     public final static String Q1_ANSWER = "q1_answer";
     public final static String Q2_ANSWER = "q2_answer";
     public final static String Q3_ANSWER = "q3_answer";
@@ -80,6 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public final static String Q8_ANSWER = "q8_answer";
     public final static String Q9_ANSWER = "q9_answer";
     public final static String Q10_ANSWER = "q10_answer";
+    public final static String RESULT_PERCENTAGE = "result_percentage";
 
     // endregion
 
@@ -102,7 +105,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Create STUDENT_CLASS_TBALE query
     String tempStudentClassTableCreate =
             STUDENT_CLASS_NAME + TEXT_TYPE +
-                    CLASS_INDEX + INTEGER_TYPE+
+                    CLASS_INDEX + INTEGER_TYPE +
                     ACTIVE_TEST_ID + " INTEGER ";
 
     String STUDENT_CLASS_CREATE_TABLE = createTableStatement(STUDENT_CLASS_TABLE, ID_STUDENT_CLASS_TABLE, tempStudentClassTableCreate);
@@ -135,11 +138,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     EXAM_TEST_ID_F + INTEGER_TYPE +
                     EXAM_STUDENT_ID_F + " INTEGER";
 
-    String RESULT_CREATE_TABLE = createTableStatement(EXAM_TABLE, ID_RESULT_TABLE, tempExamtTableCreate);
+    String RESULT_CREATE_TABLE = createTableStatement(EXAM_TABLE, ID_EXAM_TABLE, tempExamtTableCreate);
 
     // Create RESULT_TBALE query
     String tempResultTableCreate =
-            RESULT_EXAM_ID_F + INTEGER_TYPE +
+            RESULT_TEST_ID_F + INTEGER_TYPE +
+                    RESULT_STUDENT_ID_F + INTEGER_TYPE +
+                    RESULT_DATE_TIME + TEXT_TYPE +
                     Q1_ANSWER + TEXT_TYPE +
                     Q2_ANSWER + TEXT_TYPE +
                     Q3_ANSWER + TEXT_TYPE +
@@ -149,8 +154,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     Q7_ANSWER + TEXT_TYPE +
                     Q8_ANSWER + TEXT_TYPE +
                     Q9_ANSWER + TEXT_TYPE +
-                    Q10_ANSWER + " TEXT";
-    String EXAM_CREATE_TABLE = createTableStatement(RESULT_TABLE, ID_EXAM_TABLE, tempResultTableCreate);
+                    Q10_ANSWER + TEXT_TYPE +
+                    RESULT_PERCENTAGE+ " TEXT" ;
+    String EXAM_CREATE_TABLE = createTableStatement(RESULT_TABLE, ID_RESULT_TABLE, tempResultTableCreate);
 
 
     private String createTableStatement(String tableName, String id, String columns) {
@@ -202,11 +208,11 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Method to seed the data at initial data logging.
      */
-    public void seedData(){
+    public void seedData() {
         // Inserting students
-        insertStudent("Aslam Khan", "Sulman Khan", "Kot", "322", 0, 1 );
-        insertStudent("Akram Khan", "Sulman Khan", "Kot", "322", 0, 2 );
-        insertStudent("Asghar Khan", "Sulman Khan", "Kot", "322", 0, 3 );
+        insertStudent("Aslam Khan", "Sulman Khan", "Kot", "322", 0, 1);
+        insertStudent("Akram Khan", "Sulman Khan", "Kot", "322", 0, 2);
+        insertStudent("Asghar Khan", "Sulman Khan", "Kot", "322", 0, 3);
 
         // Inserting Test
         insertTest(0, "English", 1, "1", "01/01/2018", 10, 10);
@@ -214,39 +220,39 @@ public class DBHelper extends SQLiteOpenHelper {
         insertTest(0, "English", 1, "3", "01/01/2018", 10, 10);
 
         // Inserting Questions to above test
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
-        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know" );
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
+        insertQuestion(1, "What is Urdu", "Urdu", "English", "Punjabi", "Don't Know");
 
         // Inserting Classes
-        insertStudentClass("Nursary", 0 , -1);
-        insertStudentClass("One", 1 , -1);
-        insertStudentClass("Two", 2 , -1);
-        insertStudentClass("Three", 3 , -1);
-        insertStudentClass("Four", 4 , -1);
-        insertStudentClass("Five", 5 , -1);
-        insertStudentClass("Six", 6 , -1);
-        insertStudentClass("Seven", 7 , -1);
-        insertStudentClass("Eight", 8 , -1);
-        insertStudentClass("Nine", 9 , -1);
-        insertStudentClass("10", 10 , -1);
+        insertStudentClass("Nursary", 0, -1);
+        insertStudentClass("One", 1, -1);
+        insertStudentClass("Two", 2, -1);
+        insertStudentClass("Three", 3, -1);
+        insertStudentClass("Four", 4, -1);
+        insertStudentClass("Five", 5, -1);
+        insertStudentClass("Six", 6, -1);
+        insertStudentClass("Seven", 7, -1);
+        insertStudentClass("Eight", 8, -1);
+        insertStudentClass("Nine", 9, -1);
+        insertStudentClass("10", 10, -1);
 
     }
 
     /**
-     * @param name Name of the student.
+     * @param name       Name of the student.
      * @param fatherName Father Name of the student
-     * @param address Address of the student
-     * @param phone Phone number to whome student can be connected
-     * @param stdClass Student class
-     * @param roll_no roll number of the student.
+     * @param address    Address of the student
+     * @param phone      Phone number to whome student can be connected
+     * @param stdClass   Student class
+     * @param roll_no    roll number of the student.
      * @return true if insert student is succesfull.
      */
     // region Students record manipulation methods
@@ -271,7 +277,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<Student> getStudentsOfWhere(String where){
+    public ArrayList<Student> getStudentsOfWhere(String where) {
         ArrayList<Student> studentsArrayList = new ArrayList<Student>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -451,7 +457,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<Test> getTestsWhere(String where){
+    public ArrayList<Test> getTestsWhere(String where) {
         ArrayList<Test> testsArrayList = new ArrayList<Test>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -611,7 +617,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public ArrayList<Exam> getAllExamWhere(String where){
+    public ArrayList<Exam> getAllExamWhere(String where) {
         ArrayList<Exam> examsArrayList = new ArrayList<Exam>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -619,7 +625,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + EXAM_TABLE + " WHERE " + where, null);
         cursor.moveToFirst();
 
-        Exam exam= new Exam();
+        Exam exam = new Exam();
 
         if (cursor.getCount() > 0) {
             while (cursor.isAfterLast() == false) {
@@ -638,11 +644,13 @@ public class DBHelper extends SQLiteOpenHelper {
     // endregion
 
     // region Result record manipulation methods
-    public boolean insertResult(int result_exam_id, String q1_answer, String q2_answer, String q3_answer, String q4_answer, String q5_answer, String q6_answer, String q7_answer, String q8_answer, String q9_answer, String q10_answer) {
+    public long insertResult(int result_test_id, int result_student_id, String date_time, String q1_answer, String q2_answer, String q3_answer, String q4_answer, String q5_answer, String q6_answer, String q7_answer, String q8_answer, String q9_answer, String q10_answer, String resultPercentage) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(RESULT_EXAM_ID_F, result_exam_id);
+        values.put(RESULT_TEST_ID_F, result_test_id);
+        values.put(RESULT_STUDENT_ID_F, result_student_id);
+        values.put(RESULT_DATE_TIME, result_student_id);
         values.put(Q1_ANSWER, q1_answer);
         values.put(Q2_ANSWER, q2_answer);
         values.put(Q3_ANSWER, q3_answer);
@@ -653,15 +661,10 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(Q8_ANSWER, q8_answer);
         values.put(Q9_ANSWER, q9_answer);
         values.put(Q10_ANSWER, q10_answer);
+        values.put(RESULT_PERCENTAGE, resultPercentage);
 
         long insert_result = db.insert(RESULT_TABLE, null, values);
-
-        if (insert_result == -1) {
-            return false;
-        }
-        {
-            return true;
-        }
+        return insert_result;
     }
 
     public ArrayList<String> getAllResultsRecords() {
@@ -679,7 +682,9 @@ public class DBHelper extends SQLiteOpenHelper {
             while (cursor.isAfterLast() == false) {
                 builder = new StringBuilder();
                 builder.append("Result ID: " + cursor.getInt(cursor.getColumnIndex(ID_QUESTIONS_TABLE)) + "\n");
-                builder.append("Exam ID: " + cursor.getInt(cursor.getColumnIndex(RESULT_EXAM_ID_F)) + "\n");
+                builder.append("Test ID: " + cursor.getInt(cursor.getColumnIndex(RESULT_TEST_ID_F)) + "\n");
+                builder.append("Student ID: " + cursor.getInt(cursor.getColumnIndex(RESULT_STUDENT_ID_F)) + "\n");
+                builder.append("Date and Time: " + cursor.getInt(cursor.getColumnIndex(RESULT_DATE_TIME)) + "\n");
                 builder.append("Question 1 Answer: " + cursor.getString(cursor.getColumnIndex(Q1_ANSWER)) + "\n");
                 builder.append("Question 2 Answer: " + cursor.getString(cursor.getColumnIndex(Q2_ANSWER)) + "\n");
                 builder.append("Question 3 Answer: " + cursor.getString(cursor.getColumnIndex(Q3_ANSWER)) + "\n");
@@ -699,7 +704,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public ArrayList<Result> getResultOfWhere(String where){
+    public ArrayList<Result> getResultOfWhere(String where) {
 
         ArrayList<Result> resultsArrayList = new ArrayList<Result>();
 
@@ -708,12 +713,14 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + RESULT_TABLE + " WHERE " + where, null);
         cursor.moveToFirst();
 
-        Result result = new Result();
 
         if (cursor.getCount() > 0) {
             while (cursor.isAfterLast() == false) {
+                Result result = new Result();
                 result.set_id(cursor.getInt(cursor.getColumnIndex(ID_RESULT_TABLE)));
-                result.setExam_id(cursor.getInt(cursor.getColumnIndex(RESULT_EXAM_ID_F)));
+                result.setTest_id(cursor.getInt(cursor.getColumnIndex(RESULT_TEST_ID_F)));
+                result.setStudent_id(cursor.getInt(cursor.getColumnIndex(RESULT_STUDENT_ID_F)));
+                result.setDateTime(cursor.getString(cursor.getColumnIndex(RESULT_DATE_TIME)));
                 result.setAnsQ1(cursor.getString(cursor.getColumnIndex(Q1_ANSWER)));
                 result.setAnsQ2(cursor.getString(cursor.getColumnIndex(Q2_ANSWER)));
                 result.setAnsQ3(cursor.getString(cursor.getColumnIndex(Q3_ANSWER)));
@@ -724,6 +731,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 result.setAnsQ8(cursor.getString(cursor.getColumnIndex(Q8_ANSWER)));
                 result.setAnsQ9(cursor.getString(cursor.getColumnIndex(Q9_ANSWER)));
                 result.setAnsQ10(cursor.getString(cursor.getColumnIndex(Q10_ANSWER)));
+                result.setResultPercentage(cursor.getString(cursor.getColumnIndex(RESULT_PERCENTAGE)));
 
                 resultsArrayList.add(result);
                 cursor.moveToNext();

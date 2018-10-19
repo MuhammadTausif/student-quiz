@@ -21,14 +21,14 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
     // region Fields and Instances
-
     Context context;
     DBHelperSpecific dbHelperSpecific;
+    Bundle extras;
+    Intent intent;
+
+    // Layout instances
     TextView studentDetailForQuizTextDisplay, testDetailForQuizTextDisplay;
-
     TextView questionCurrentTextView, questionNumberTextView;
-    ArrayList<Question> questionsListForQuiz;
-
     Button optionAButton, optionBButton, optionCButton, optionDButton;
 
     int examIdForQuiz;
@@ -38,12 +38,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     String[] resultOfQuiz = {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"};
     int globalResultOfQuizStringIncreament = 0;
 
-    Bundle extras;
-    Intent intent;
-
     // Reference IDs and instances
-    int studentID, studentClassIndex, activeTestID, totalQuestions, currentQustionIndex;
+    int studentID, studentClassIndex, activeTestID, totalQuestions, currentQustionIndex, score = 0;
+    String percentage;
     long examID;
+    long resultID;
+    ArrayList<Question> questionsListForQuiz;
     StudentClass studentClass;
     Student student;
     Test test;
@@ -121,25 +121,26 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         String tempOptionString = tempOptionView.getText().toString();
         if (tempOptionString == tempOptionsForQuestion[0]) {
 //            AlertMessage.ShowAlertMessage(QuizActivity.this, "Correct A");
+            score++;
             ToastMessage.ShowToastMessage(context, "Correct");
-            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "A";
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + ",A";
             globalResultOfQuizStringIncreament++;
         } else if (tempOptionString == tempOptionsForQuestion[1]) {
 //            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong B");
             ToastMessage.ShowToastMessage(context, "Wrong");
-            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "B";
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + ",B";
             globalResultOfQuizStringIncreament++;
 
         } else if (tempOptionString == tempOptionsForQuestion[2]) {
 //            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong C");
             ToastMessage.ShowToastMessage(context, "Wrong");
 
-            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "C";
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + ",C";
             globalResultOfQuizStringIncreament++;
         } else if (tempOptionString == tempOptionsForQuestion[3]) {
 //            AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong D");
             ToastMessage.ShowToastMessage(context, "Wrong");
-            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + "D";
+            resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + ",D";
             globalResultOfQuizStringIncreament++;
         }
     }
@@ -233,7 +234,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             optionDButton.setText(tempOptionToBeAssigned);
             tempOptionsStringArrayList.remove(tempOptionToBeAssigned);
 
-
             questionsListForQuiz.remove(questionCurrent);
         } else {
             AlertMessage.ShowAlertMessage(QuizActivity.this, "No Question.");
@@ -244,7 +244,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             }
             AlertMessage.ShowAlertMessage(QuizActivity.this, sb.toString());
             DBHelper dbHelper = new DBHelper(QuizActivity.this);
-            boolean status = dbHelper.insertResult(examIdForQuiz,
+            String examDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+            float tempPercentage = 100 * ((float)score / (float)totalQuestions);
+            percentage = Float.toString(tempPercentage);
+            resultID = dbHelper.insertResult(activeTestID,
+                    studentID,
+                    examDate,
                     resultOfQuiz[0],
                     resultOfQuiz[1],
                     resultOfQuiz[2],
@@ -254,9 +259,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                     resultOfQuiz[6],
                     resultOfQuiz[7],
                     resultOfQuiz[8],
-                    resultOfQuiz[9]
+                    resultOfQuiz[9],
+                    percentage
             );
-            if(status){
+            if (resultID != -1) {
                 ToastMessage.ShowToastMessage(context, "Data Inserted");
             }
         }
@@ -317,6 +323,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         dbHelperSpecific = new DBHelperSpecific(context);
         studentClass = dbHelperSpecific.getStudentClassFromClassIndex(studentClassIndex);
         activeTestID = studentClass.getActiveTestID();
+        student = dbHelperSpecific.getStudentFromStudentID(studentID);
+        test = dbHelperSpecific.getTestFromID(activeTestID);
         questionsListForQuiz = dbHelperSpecific.getAllQuestionFromTestId(activeTestID);
 
         // Intializing the number of questions
@@ -324,6 +332,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         totalQuestions = questionsListForQuiz.size();
 
         questionNumberTextView.setText("Question " + currentQustionIndex + "/" + totalQuestions);
+        studentDetailForQuizTextDisplay.setText(student.getRollNo() + ": " + student.getName() + " (" + student.getClassStd() + ")");
+        testDetailForQuizTextDisplay.setText(test.getSubject() + ", Ch# " + test.getChapter() + ", Sec# " + test.getSections());
 
         // Inserting Quiz Exam
         examID = dataInsertedIntoExamTable();
@@ -380,7 +390,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         if (currentQustionIndex == totalQuestions) {
 
             intent = new Intent(context, ResultActivity.class);
-            intent.putExtra("EXAM_ID_FOR_RESULT", examIdForQuiz);
+            int tempResultID = (int) resultID;
+            intent.putExtra("RESULT_ID", tempResultID);
             startActivity(intent);
         }
         // Incrementing the Current Question Number

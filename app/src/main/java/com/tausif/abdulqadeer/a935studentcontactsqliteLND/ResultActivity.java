@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class ResultActivity extends AppCompatActivity {
 
     // region Fields and Instances
+    // Data instances
     int examID;
     Exam exam;
     Bundle extras;
@@ -29,9 +30,12 @@ public class ResultActivity extends AppCompatActivity {
     Test test;
     Student student;
     StudentClass studentClass;
+    ArrayList<QuestionResult> questionsResult;
+    ArrayList<Question> questions;
+
+    // Reference instances
     Intent intent;
     Context context;
-    ArrayList<Question> questions;
     DBHelperSpecific dbHelperSpecific;
 
     // Layout fields
@@ -39,7 +43,8 @@ public class ResultActivity extends AppCompatActivity {
     TableLayout resultTable;
     TableLayout.LayoutParams tableLayoutParams;
     TableRow.LayoutParams rowLayoutParams;
-    // endregion abd== and
+
+    // endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +114,7 @@ public class ResultActivity extends AppCompatActivity {
     void getExtras() {
         extras = getIntent().getExtras();
         if (extras != null) {
-            examID = extras.getInt("EXAM_ID_FOR_RESULT");
+            examID = extras.getInt("RESULT_ID");
         }
     }
 
@@ -119,10 +124,11 @@ public class ResultActivity extends AppCompatActivity {
 
         // getting result of exam, test, questions, student etc
         exam = dbHelperSpecific.getExamFromExamID(examID);
-        student = dbHelperSpecific.getStudentFromStudentID(exam.getStudentID());
-        test = dbHelperSpecific.getTestFromID(exam.getTestID());
-        questions = dbHelperSpecific.getAllQuestionFromTestId(test.get_id());
         result = dbHelperSpecific.getResultOfExamID(examID);
+        test = dbHelperSpecific.getTestFromID(result.getTest_id());
+        student = dbHelperSpecific.getStudentFromStudentID(result.getStudent_id());
+        questions = dbHelperSpecific.getAllQuestionFromTestId(test.get_id());
+        questionsResult = ManipulateResult.manipulateResult(result);
 
         // Layout parameter
         tableLayoutParams = new TableLayout.LayoutParams(
@@ -138,8 +144,24 @@ public class ResultActivity extends AppCompatActivity {
         resultSummaryTextVeiw = (TextView) findViewById(R.id.resultSummary_textView_result);
         resultTable = (TableLayout) findViewById(R.id.resultDetail_table_result);
 
+        updatingTextViews();
     }
 
+    void updatingTextViews() {
+        studentDetailTextView.setText(student.getRollNo() + ": " + student.getName() + " (" + student.getClassStd() + ")");
+        testDetailTextView.setText(test.getSubject() + " Ch# " + test.getChapter() + ", Sec#" + test.getSections());
+        int[] currentResultSummary = getResultSummary();
+        if(currentResultSummary[3]<100){
+            resultSummaryTextVeiw.setBackgroundColor(Color.RED);
+            resultSummaryTextVeiw.setTextColor(Color.YELLOW);
+            resultSummaryTextVeiw.setPadding(5,10,5,10);
+        }else {
+            resultSummaryTextVeiw.setBackgroundColor(Color.GREEN);
+        }
+        resultSummaryTextVeiw.setText( "Result No: " + result.get_id() + ", Time: " + result.getDateTime() + "\n" + "Summary: " + currentResultSummary[0] +"/"+ currentResultSummary[2] + ", " + currentResultSummary[3]+"%");
+    }
+
+    // region Adding data to the table
     void addTable() {
         addTableHeader();
         addTableData();
@@ -191,15 +213,19 @@ public class ResultActivity extends AppCompatActivity {
 
 
             // Adding Action action to the row.
-            TextView openQuestions = getTextView();
-            openQuestions.setText("Open");
-            tableRow.addView(openQuestions);
+            TextView seletedAnswer = getTextView();
+            ArrayList<String> theResult = getAnsweredOptionOfQuestion(q);
+            seletedAnswer.setText(theResult.get(1));
+            if (theResult.get(0) == "0") {
+                seletedAnswer.setBackgroundColor(Color.RED);
+            } else {
+                seletedAnswer.setBackgroundColor(Color.GREEN);
+            }
+            tableRow.addView(seletedAnswer);
 
             // Adding row to the table
             resultTable.addView(tableRow);
-
         }
-
     }
 
     private TextView getTextView() {
@@ -219,5 +245,60 @@ public class ResultActivity extends AppCompatActivity {
         return tempTextView;
     }
 
+    // endregion
 
+    int[] getResultSummary() {
+        int totalQuestions = questions.size();
+        int correctAnsweredQuestion = 0;
+        int percentage = 0;
+
+        for (Question question : questions) {
+            if (getAnsweredOptionOfQuestion(question).get(0) == "1") {
+                correctAnsweredQuestion++;
+            }
+        }
+
+        int wrongAttemptedQuestion = totalQuestions - correctAnsweredQuestion;
+         percentage =  (int)( 100 * (float)((float)correctAnsweredQuestion / (float)totalQuestions));
+        int[] resultSummary = {correctAnsweredQuestion, wrongAttemptedQuestion, totalQuestions, percentage};
+        return resultSummary;
+    }
+
+    ArrayList<String> getAnsweredOptionOfQuestion(Question question) {
+        ArrayList<String> theResult = new ArrayList<String>();
+        String selectedOption = null;
+        String selectedOptionText = null;
+        String status = "0";
+        for (QuestionResult questionResult :
+                questionsResult) {
+            if (question.getQuestionId() == questionResult.getQuestionID()) {
+                selectedOption = questionResult.getSelectedOption();
+                switch (selectedOption) {
+                    case "A":
+                        selectedOptionText = question.getOptionA();
+                        status = "1";
+                        break;
+                    case "B":
+                        selectedOptionText = question.getOptionB();
+                        break;
+                    case "C":
+                        selectedOptionText = question.getOptionC();
+                        break;
+                    case "D":
+                        selectedOptionText = question.getOptionD();
+                        break;
+                }
+            }
+        }
+        theResult.add(status);
+        theResult.add(selectedOptionText);
+        theResult.add(selectedOption);
+
+        return theResult;
+    }
 }
+
+
+
+
+
