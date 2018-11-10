@@ -3,6 +3,7 @@ package com.tausif.abdulqadeer.a935studentcontactsqliteLND;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (String student_class : classesList) {
 //            Toast.makeText(getApplicationContext(), student_class, Toast.LENGTH_SHORT).show();
         }
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
     }
 
     private void inflateFeilds() {

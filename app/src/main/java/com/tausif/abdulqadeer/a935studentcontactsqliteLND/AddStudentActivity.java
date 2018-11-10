@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+
 import java.util.ArrayList;
 
 public class AddStudentActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
@@ -22,6 +24,7 @@ public class AddStudentActivity extends AppCompatActivity implements TextWatcher
     EditText name, fatherName, address, phone, studentClass;
     Spinner rollNo;
     Button saveBtn;
+    int tempClassIDFromInt=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,9 @@ public class AddStudentActivity extends AppCompatActivity implements TextWatcher
         Bundle extras = new Bundle();
         extras = getIntent().getExtras();
         if (extras != null) {
-            int tempClassIDFromInt = extras.getInt("CLASS_ID_FR0M_VIEW_STUDENTS");
+            // The next line was for ViewStudentActivity Call
+//            tempClassIDFromInt = extras.getInt("CLASS_ID_FR0M_VIEW_STUDENTS");
+            tempClassIDFromInt = extras.getInt("CLASS_ID_FOR_ADD_STUDENT");
             String tempClassIDFromViewStudent = String.valueOf(tempClassIDFromInt);
 
             studentClass.setText(tempClassIDFromViewStudent);
@@ -78,7 +83,7 @@ public class AddStudentActivity extends AppCompatActivity implements TextWatcher
                             Integer.parseInt(studentClass.getText().toString()),
                             Integer.parseInt(rollNo.getSelectedItem().toString())
                     );
-                    Intent intent = new Intent(AddStudentActivity.this, ViewStudentActivity.class);
+                    Intent intent = new Intent(AddStudentActivity.this, ViewClassStudentsActivity.class);
                     intent.putExtra("CLASS_ID_FOR_STUDENTS", studentClass.getText().toString());
                     startActivity(intent);
                 } else {
@@ -101,7 +106,8 @@ public class AddStudentActivity extends AppCompatActivity implements TextWatcher
         switch (item.getItemId()) {
 
             case R.id.home_menu:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
                 startActivity(intent);
                 return true;
 

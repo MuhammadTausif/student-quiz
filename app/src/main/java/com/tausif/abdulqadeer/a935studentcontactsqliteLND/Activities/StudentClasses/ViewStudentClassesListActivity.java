@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -25,6 +26,7 @@ import com.tausif.abdulqadeer.a935studentcontactsqliteLND.MainActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.QuizActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.R;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.StudentClass;
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.ToastMessage;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewClassStudentsActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewClassTestsActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.ViewClassesActivity;
@@ -50,6 +52,10 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
         inflateAndIntialize();
         addTableHeader();
         attachStudentClassesListToTable();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // region Floating action Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -89,7 +95,8 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.home_menu:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
                 startActivity(intent);
                 return true;
 

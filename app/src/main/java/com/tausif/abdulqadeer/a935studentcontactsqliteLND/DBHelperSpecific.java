@@ -738,6 +738,17 @@ public class DBHelperSpecific {
         return results;
     }
 
+    public float getStudentAverageResult(int studentID){
+        ArrayList<Result> results = getResultOfStudentID(studentID);
+        float totalNumberPercentage = 0;
+        for (Result result : results) {
+            totalNumberPercentage= totalNumberPercentage + Float.parseFloat(result.getResultPercentage());
+        }
+
+        float overallPercentage = totalNumberPercentage / (float)results.size();
+        return overallPercentage;
+    }
+
     // endregion
 
 }

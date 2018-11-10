@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentTests.AddStudentTestActivity;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,8 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddTestActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddStudentTestActivity.class);
+                intent.putExtra("STUDENT_CLASS_ID", studentClass.get_id());
                 startActivity(intent);
             }
         });
@@ -91,7 +93,7 @@ public class ViewClassTestsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.home_menu:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -250,8 +252,8 @@ public class ViewClassTestsActivity extends AppCompatActivity {
                 radioButtons.add(radioGroup);
                 radioGroup.addView(status);
                 int tempTotalQuestionsAdded = dbHelperSpecific.getAllQuestionFromTestId(t.get_id()).size();
-                int tempTotalQuestions = Integer.parseInt( t.getTotalQuestions());
-                if(tempTotalQuestions!=tempTotalQuestionsAdded){
+                int tempTotalQuestions = Integer.parseInt(t.getTotalQuestions());
+                if (tempTotalQuestions != tempTotalQuestionsAdded) {
                     status.setEnabled(false);
                 }
 

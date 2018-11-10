@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +50,8 @@ public class AddExamActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.home_menu:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
                 startActivity(intent);
                 return true;
 

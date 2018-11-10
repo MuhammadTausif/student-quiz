@@ -207,22 +207,26 @@ public class ViewTestQuestionsListActivity extends AppCompatActivity {
                 // Adding id to the row
                 TextView idTextView = getTextView();
                 idTextView.setText(Integer.toString(q.getQuestionId()));
+                idTextView.setWidth(100);
                 tableRow.addView(idTextView);
 
                 // Adding Question to the row
                 TextView subjectTextView = getTextView();
                 subjectTextView.setText(q.getQuestion());
+                subjectTextView.setMaxWidth(300);
                 tableRow.addView(subjectTextView);
 
                 // Adding Answer to the row
                 TextView chapterTextView = getTextView();
                 chapterTextView.setText(q.getOptionA());
+                chapterTextView.setMaxWidth(50);
                 tableRow.addView(chapterTextView);
 
 
                 // Adding Action action to the row.
                 TextView openQuestions = getTextView();
                 openQuestions.setText("Open");
+                openQuestions.setMaxWidth(100);
                 openQuestions.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

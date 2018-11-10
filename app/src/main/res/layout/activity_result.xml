@@ -19,9 +19,9 @@
     <TextView
         android:id="@+id/testDetail_textView_result"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_height="wrap_content"
         android:text="Test Detail"
         android:textSize="20dp" />
 
@@ -33,15 +33,19 @@
         android:gravity="center"
         android:text="Result Summry"
         android:textSize="20dp" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="*"
-            android:id="@+id/resultDetail_table_result">
+        android:layout_height="wrap_content"
+        >
 
-        </TableLayout>
+
+            <TableLayout
+                android:id="@+id/resultDetail_table_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="2,3,4">
+
+            </TableLayout>
     </ScrollView>
 </LinearLayout>

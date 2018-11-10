@@ -77,10 +77,58 @@
             <TextView
                 android:id="@+id/question_current_textView"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_green_light"
-                android:padding="10dp"
+                android:layout_height="200dp"
+                android:textSize="40dp"
+                android:background="#ffff00"
+                android:padding="15dp"
                 android:text="TextView" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*">
+                <TableRow>
+                    <Button
+                        android:id="@+id/optionA_button"
+                        android:layout_width="wrap_content"
+                        android:padding="30dp"
+                        android:textSize="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Option A" />
+
+                    <Button
+                        android:id="@+id/optionB_button"
+                        android:layout_width="wrap_content"
+                        android:textSize="30dp"
+                        android:padding="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Option B" />
+
+                </TableRow>
+                <TableRow>
+                    <Button
+                        android:id="@+id/optionC_button"
+                        android:layout_width="wrap_content"
+                        android:textSize="30dp"
+                        android:layout_height="match_parent"
+                        android:padding="30dp"
+                        android:layout_weight="1"
+                        android:text="Option C" />
+
+                    <Button
+                        android:id="@+id/optionD_button"
+                        android:layout_width="wrap_content"
+                        android:textSize="30dp"
+                        android:layout_height="match_parent"
+                        android:padding="30dp"
+                        android:layout_weight="1"
+                        android:text="Option D" />
+
+                </TableRow>
+
+            </TableLayout>
 
             <LinearLayout
                 android:id="@+id/options_linear_layout"
@@ -95,19 +143,6 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/optionA_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Option A" />
-
-                    <Button
-                        android:id="@+id/optionB_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Option B" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,19 +152,6 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/optionC_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Option C" />
-
-                    <Button
-                        android:id="@+id/optionD_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Option D" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

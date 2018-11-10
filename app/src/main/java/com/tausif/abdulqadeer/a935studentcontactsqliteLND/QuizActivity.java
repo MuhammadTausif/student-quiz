@@ -35,7 +35,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     int testIdForQuiz;
     int questionIdForCurrentQuestion;
     String[] tempOptionsForQuestion = {null, null, null, null};
-    String[] resultOfQuiz = {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"};
+//    String[] resultOfQuiz = {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"};
+    String[] resultOfQuiz;
     int globalResultOfQuizStringIncreament = 0;
 
     // Reference IDs and instances
@@ -59,61 +60,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         produceRandomQuestions();
         addActionListener();
     }
-
-    // region Option Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        Intent intent;
-        switch (item.getItemId()) {
-
-            case R.id.home_menu:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.students_menu:
-                intent = new Intent(getApplicationContext(), ViewClassesActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.add_student_menu:
-                intent = new Intent(getApplicationContext(), AddStudentActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.add_test_menu:
-                intent = new Intent(getApplicationContext(), AddTestActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.add_questions_menu:
-                int test = 1;
-                intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.add_exam_menu:
-                intent = new Intent(getApplicationContext(), AddExamActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.take_quiz_menu:
-                intent = new Intent(getApplicationContext(), QuizActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    // endregion
 
     private void checkCorrectOption(View view) {
         // Checking the correct Option
@@ -143,57 +89,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             resultOfQuiz[globalResultOfQuizStringIncreament] = questionIdForCurrentQuestion + ",D";
             globalResultOfQuizStringIncreament++;
         }
-    }
-
-    // Action Listeners single method
-    private void addActionListener() {
-        optionAButton.setOnClickListener(this);
-        optionBButton.setOnClickListener(this);
-        optionCButton.setOnClickListener(this);
-        optionDButton.setOnClickListener(this);
-    }
-
-    // This is old action Listener for each method
-    private void addActionListenerOld() {
-        optionAButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                TextView tempOptionAView = (TextView) v;
-//                String tempOptionAString = tempOptionAView.getText().toString();
-//                if (tempOptionAString == tempOptionsForQuestion[0]) {
-//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Correct A");
-//                } else if (tempOptionAString == tempOptionsForQuestion[1]) {
-//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong B");
-//                } else if (tempOptionAString == tempOptionsForQuestion[2]) {
-//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong C");
-//                } else if (tempOptionAString == tempOptionsForQuestion[3]) {
-//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong D");
-//                }
-                checkCorrectOption(v);
-                produceRandomQuestions();
-            }
-        });
-        optionBButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCorrectOption(v);
-                produceRandomQuestions();
-            }
-        });
-        optionCButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCorrectOption(v);
-                produceRandomQuestions();
-            }
-        });
-        optionDButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCorrectOption(v);
-                produceRandomQuestions();
-            }
-        });
     }
 
     private void produceRandomQuestions() {
@@ -268,21 +163,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void produceRandomQuestionsForTest() {
-        if (questionsListForQuiz.size() > 0) {
-            while (questionsListForQuiz.size() > 0) {
-                Random random = new Random();
-                Question questionCurrent = questionsListForQuiz.get(random.nextInt(questionsListForQuiz.size()));
-                AlertMessage.ShowAlertMessage(QuizActivity.this, questionCurrent.toString());
-                questionsListForQuiz.remove(questionCurrent);
-            }
-        }
-    }
-
-    private void getQuestionList() {
-        questionsListForQuiz = dbHelperSpecific.getAllQuestionFromTestId(activeTestID);
-    }
-
     private void inflateFields() {
         studentDetailForQuizTextDisplay = (TextView) findViewById(R.id.student_detail_for_quiz_text_view);
         testDetailForQuizTextDisplay = (TextView) findViewById(R.id.test_detail_for_quiz_text_view);
@@ -330,6 +210,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         // Intializing the number of questions
         currentQustionIndex = 1;
         totalQuestions = questionsListForQuiz.size();
+        resultOfQuiz = new String[totalQuestions];
 
         questionNumberTextView.setText("Question " + currentQustionIndex + "/" + totalQuestions);
         studentDetailForQuizTextDisplay.setText(student.getRollNo() + ": " + student.getName() + " (" + student.getClassStd() + ")");
@@ -382,6 +263,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         return statusForInsertion;
     }
 
+    // Action Listeners single method
+    private void addActionListener() {
+        optionAButton.setOnClickListener(this);
+        optionBButton.setOnClickListener(this);
+        optionCButton.setOnClickListener(this);
+        optionDButton.setOnClickListener(this);
+    }
+
     @Override
     public void onClick(View v) {
         checkCorrectOption(v);
@@ -399,4 +288,122 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         questionNumberTextView.setText("Question " + currentQustionIndex + "/" + totalQuestions);
 
     }
+
+    // region Option Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        Intent intent;
+        switch (item.getItemId()) {
+
+            case R.id.home_menu:
+//                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.students_menu:
+                intent = new Intent(getApplicationContext(), ViewClassesActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_student_menu:
+                intent = new Intent(getApplicationContext(), AddStudentActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_test_menu:
+                intent = new Intent(getApplicationContext(), AddTestActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_questions_menu:
+                int test = 1;
+                intent = new Intent(getApplicationContext(), AddQuestionActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.add_exam_menu:
+                intent = new Intent(getApplicationContext(), AddExamActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.take_quiz_menu:
+                intent = new Intent(getApplicationContext(), QuizActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    // endregion
+
+    // region Unused
+
+    // This is old action Listener for each method
+    private void addActionListenerOld() {
+        optionAButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                TextView tempOptionAView = (TextView) v;
+//                String tempOptionAString = tempOptionAView.getText().toString();
+//                if (tempOptionAString == tempOptionsForQuestion[0]) {
+//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Correct A");
+//                } else if (tempOptionAString == tempOptionsForQuestion[1]) {
+//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong B");
+//                } else if (tempOptionAString == tempOptionsForQuestion[2]) {
+//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong C");
+//                } else if (tempOptionAString == tempOptionsForQuestion[3]) {
+//                    AlertMessage.ShowAlertMessage(QuizActivity.this, "Wrong D");
+//                }
+                checkCorrectOption(v);
+                produceRandomQuestions();
+            }
+        });
+        optionBButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkCorrectOption(v);
+                produceRandomQuestions();
+            }
+        });
+        optionCButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkCorrectOption(v);
+                produceRandomQuestions();
+            }
+        });
+        optionDButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkCorrectOption(v);
+                produceRandomQuestions();
+            }
+        });
+    }
+
+    private void produceRandomQuestionsForTest() {
+        if (questionsListForQuiz.size() > 0) {
+            while (questionsListForQuiz.size() > 0) {
+                Random random = new Random();
+                Question questionCurrent = questionsListForQuiz.get(random.nextInt(questionsListForQuiz.size()));
+                AlertMessage.ShowAlertMessage(QuizActivity.this, questionCurrent.toString());
+                questionsListForQuiz.remove(questionCurrent);
+            }
+        }
+    }
+
+    private void getQuestionList() {
+        questionsListForQuiz = dbHelperSpecific.getAllQuestionFromTestId(activeTestID);
+    }
+
+    // endregion
 }

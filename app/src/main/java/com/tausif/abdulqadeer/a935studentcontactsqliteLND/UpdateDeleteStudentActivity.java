@@ -118,7 +118,8 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
                     updateStudentObject();
                     if (dbHelperSpecific.updateStudent(student)) {
                         AlertMessage.ShowAlertMessage(UpdateDeleteStudentActivity.this, student.getName() + " updated");
-                        Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewStudentActivity.class);
+//                        Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewStudentActivity.class);
+                        Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewClassStudentsActivity.class);
                         intent.putExtra("CLASS_ID_FOR_STUDENTS", String.valueOf(student.getClassStd()));
                         startActivity(intent);
                     } else {
@@ -144,7 +145,8 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
                             // Delete the student
                             if (dbHelperSpecific.deleteStudent(student)) {
                                 dialog.cancel();
-                                Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewStudentActivity.class);
+//                                Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewStudentActivity.class);
+                                Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewClassStudentsActivity.class);
                                 intent.putExtra("CLASS_ID_FOR_STUDENTS", String.valueOf(student.getClassStd()));
                                 startActivity(intent);
                             }
@@ -157,7 +159,8 @@ public class UpdateDeleteStudentActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewStudentActivity.class);
+//                            Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewStudentActivity.class);
+                            Intent intent = new Intent(UpdateDeleteStudentActivity.this, ViewClassStudentsActivity.class);
                             intent.putExtra("CLASS_ID_FOR_STUDENTS", String.valueOf(student.getClassStd()));
                             startActivity(intent);
                         }

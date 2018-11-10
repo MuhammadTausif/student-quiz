@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.Activities.StudentClasses.ViewStudentClassesListActivity;
+
 public class ManageTestActivity extends AppCompatActivity {
 
     @Override
@@ -27,7 +29,8 @@ public class ManageTestActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.home_menu:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), ViewStudentClassesListActivity.class);
                 startActivity(intent);
                 return true;
 

@@ -40,7 +40,8 @@
             android:label="ViewTestActivity" />
         <activity
             android:name=".QuizActivity"
-            android:label="QuizActivity" />
+            android:label="QuizActivity"
+            android:noHistory="true" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
@@ -61,27 +62,33 @@
             android:label="ViewClassesActivity" />
         <activity
             android:name=".UpdateDeleteStudentActivity"
-            android:label="UpdateDeleteStudentActivity" />
+            android:label="UpdateDeleteStudentActivity"
+            android:noHistory="true" />
         <activity
             android:name=".ViewTestsActivity"
             android:label="@string/title_activity_view_tests"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewAllTestsListActivity" />
-        <activity android:name=".ViewClassTestsActivity" />
-        <activity android:name=".UpdateDeleteTestActivity" />
+        <activity android:name=".ViewAllTestsListActivity"
+            android:label="ViewAllTestsListActivity"/>
+        <activity android:name=".ViewClassTestsActivity"
+            android:label="ViewClassTestsActivity"/>
+        <activity
+            android:name=".UpdateDeleteTestActivity"
+            android:noHistory="true" />
         <activity
             android:name=".ViewTestQuestionsListActivity"
             android:label="@string/title_activity_view_test_questions_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UpdateDeleteQuestionActivity"
-            android:label="UpdateDeleteQuestionActivity" />
+            android:label="UpdateDeleteQuestionActivity"
+            android:noHistory="true" />
         <activity
             android:name=".Practice.PracticeActivity"
             android:label="Practice.PracticeActivity" />
         <activity
             android:name=".ViewClassStudentsActivity"
-            android:label="@string/title_activity_view_class_student"
+            android:label="ViewClassTestsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.StudentClasses.ViewStudentClassesListActivity"
@@ -100,7 +107,10 @@
         <activity
             android:name=".Activities.StudentClasses.UpdateDeleteStudentClassActivity"
             android:label="Activities.StudentClasses.UpdateDeleteStudentClassActivity" />
-        <activity android:name=".Activities.Result.StudentResultsListActivity"></activity>
+        <activity android:name=".Activities.Result.StudentResultsListActivity" />
+        <activity android:name=".Activities.StudentTests.AddStudentTestActivity"
+            android:label="Activities.StudentTests.AddStudentTestActivity"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

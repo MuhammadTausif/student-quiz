@@ -202,19 +202,21 @@ public class ResultActivity extends AppCompatActivity {
             tableRow.addView(idTextView);
 
             // Adding Question to the row
-            TextView subjectTextView = getTextView();
-            subjectTextView.setText(q.getQuestion());
-            tableRow.addView(subjectTextView);
+            TextView questionTextView = getTextView();
+            questionTextView.setText(q.getQuestion());
+            tableRow.addView(questionTextView);
 
             // Adding Answer to the row
-            TextView chapterTextView = getTextView();
-            chapterTextView.setText(q.getOptionA());
-            tableRow.addView(chapterTextView);
+            TextView correctOptionTextView = getTextView();
+            correctOptionTextView.setText(q.getOptionA());
+            correctOptionTextView.setMaxWidth(100);
+            tableRow.addView(correctOptionTextView);
 
 
             // Adding Action action to the row.
             TextView seletedAnswer = getTextView();
             ArrayList<String> theResult = getAnsweredOptionOfQuestion(q);
+            seletedAnswer.setMaxWidth(100);
             seletedAnswer.setText(theResult.get(1));
             if (theResult.get(0) == "0") {
                 seletedAnswer.setBackgroundColor(Color.RED);
@@ -237,6 +239,7 @@ public class ResultActivity extends AppCompatActivity {
                         TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT)
         );
+        tempTextView.setMaxWidth(300);
         tempTextView.setGravity(Gravity.CENTER);
         tempTextView.setTextSize(16);
         tempTextView.setPadding(5, 20, 5, 20);
