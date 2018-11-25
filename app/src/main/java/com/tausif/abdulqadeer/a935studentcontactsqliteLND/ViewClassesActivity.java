@@ -10,6 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class ViewClassesActivity extends AppCompatActivity {
 
     ListView classesListView;
@@ -30,6 +38,21 @@ public class ViewClassesActivity extends AppCompatActivity {
 //                AlertMessage.ShowAlertMessage(ViewClassesActivity.this,listItemView.getText().toString());
             }
         });
+
+        Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate=dateFormat.format(date);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference my1Ref = database.getReference("message/" + formattedDate +"/newmessage");
+
+        myRef.setValue("Hello, World!");
+        my1Ref.setValue("Hello, World!");
+
+        ToastMessage.ShowToastMessage(getApplicationContext(), "Current time of the day using Calendar - 24 hour format: "+ formattedDate);
+//        System.out.println("Current time of the day using Calendar - 24 hour format: "+ formattedDate);
     }
 
     @Override

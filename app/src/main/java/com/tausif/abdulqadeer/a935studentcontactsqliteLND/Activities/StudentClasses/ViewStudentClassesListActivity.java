@@ -22,6 +22,7 @@ import com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddQuestionActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddStudentActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.AddTestActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.DBHelperSpecific;
+import com.tausif.abdulqadeer.a935studentcontactsqliteLND.FirebasePracticeActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.MainActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.QuizActivity;
 import com.tausif.abdulqadeer.a935studentcontactsqliteLND.R;
@@ -128,6 +129,11 @@ public class ViewStudentClassesListActivity extends AppCompatActivity {
 
             case R.id.take_quiz_menu:
                 intent = new Intent(getApplicationContext(), QuizActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.sync_menu:
+                intent = new Intent(getApplicationContext(), FirebasePracticeActivity.class);
                 startActivity(intent);
                 return true;
 

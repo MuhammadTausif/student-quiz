@@ -1,28 +1,35 @@
 {
   "project_info": {
-    "project_number": "1053752632349",
-    "firebase_url": "https://students-quiz.firebaseio.com",
-    "project_id": "students-quiz",
-    "storage_bucket": "students-quiz.appspot.com"
+    "project_number": "268103351302",
+    "firebase_url": "https://jsa-angular6-mt.firebaseio.com",
+    "project_id": "jsa-angular6-mt",
+    "storage_bucket": "jsa-angular6-mt.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1053752632349:android:9cc2f9b0a0a89816",
+        "mobilesdk_app_id": "1:268103351302:android:178daba09ec10304",
         "android_client_info": {
-//          "package_name": "www.tausifasia.com"
           "package_name": "com.tausif.abdulqadeer.a935studentcontactsqliteLND"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1053752632349-7d4dpm1qam123jmb780nf3gtvqm0ka4l.apps.googleusercontent.com",
+          "client_id": "268103351302-5psekah28lfvtuh3b5g08vm7g0nk68ip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tausif.abdulqadeer.a935studentcontactsqliteLND",
+            "certificate_hash": "1baa60754dc5844e3a0fee08a23f7a23414f00ba"
+          }
+        },
+        {
+          "client_id": "268103351302-69l69sfnajrga6q10fr0sem1du05b5v3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCwmvIvRAPSDzfeoXHINqZFpNrclxGBU7k"
+          "current_key": "AIzaSyBeDS8VHEd_Rzo-hvMYJGFZsdrQ-puOi5U"
         }
       ],
       "services": {
@@ -30,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268103351302-69l69sfnajrga6q10fr0sem1du05b5v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

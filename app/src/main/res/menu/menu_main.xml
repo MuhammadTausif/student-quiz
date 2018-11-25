@@ -24,5 +24,8 @@
     <item
         android:id="@+id/take_quiz_menu"
         android:title="Take Queiz" />
+    <item
+        android:id="@+id/sync_menu"
+        android:title="Sync" />
 
 </menu>

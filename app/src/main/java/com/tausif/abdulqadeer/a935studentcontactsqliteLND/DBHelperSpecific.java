@@ -130,9 +130,13 @@ public class DBHelperSpecific {
     /**
      * Function for Select test for Add Question class
      *
-     * @param classTest
+     * @param
      * @return
      */
+
+    public ArrayList<Test> getAllTests(){
+        return dbHelper.getAllTests();
+    }
 
     public ArrayList<String> getDistinctTestSubjects(int classTest) {
 
@@ -495,6 +499,35 @@ public class DBHelperSpecific {
     public Student getStudentFromStudentID(int studentID){
         Student student = dbHelper.getStudentsOfWhere(DBHelper.ID_STUDENT_TABLE + "=" + studentID).get(0);
         return student;
+    }
+
+    public ArrayList<Student> getAllStudents() {
+
+        ArrayList<Student> studentsArrayList = new ArrayList<Student>();
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String tempQuery = "SELECT * FROM " + DBHelper.STUDENT_TABLE ;
+        Cursor cursor = db.rawQuery(tempQuery, null);
+        cursor.moveToFirst();
+
+        if (cursor.getCount() > 0) {
+            Student student;
+            while (cursor.isAfterLast() == false) {
+                student = new Student();
+                student.set_id(cursor.getInt(cursor.getColumnIndex(ID_STUDENT_TABLE)));
+                student.setName(cursor.getString(cursor.getColumnIndex(DBHelper.NAME)));
+                student.setFatherName(cursor.getString(cursor.getColumnIndex(DBHelper.FATHER_NAME)));
+                student.setAddress(cursor.getString(cursor.getColumnIndex(DBHelper.ADDRESS)));
+                student.setPhone(cursor.getString(cursor.getColumnIndex(DBHelper.PHONE)));
+                student.setClassStd(cursor.getInt(cursor.getColumnIndex(DBHelper.STD_CLASS)));
+                student.setRollNo(cursor.getInt(cursor.getColumnIndex(DBHelper.ROLL_NO)));
+
+                studentsArrayList.add(student);
+                cursor.moveToNext();
+            }
+        }
+        return studentsArrayList;
     }
 
     public ArrayList<Student> getAllStudentsOfSpecificClass(int classStd) {

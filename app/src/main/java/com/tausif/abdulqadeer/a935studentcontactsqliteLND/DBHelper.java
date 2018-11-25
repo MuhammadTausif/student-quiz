@@ -515,6 +515,35 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return arrayList;
     }
+
+    public ArrayList<Test> getAllTests() {
+
+        ArrayList<Test> arrayList = new ArrayList<Test>();
+        Test test = new Test();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TEST_TABLE, null);
+        cursor.moveToFirst();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+
+                test.set_id(cursor.getInt(cursor.getColumnIndex(ID_TEST_TABLE)));
+                test.setClassTest(cursor.getString(cursor.getColumnIndex(CLASS_TEST)));
+                test.setSubject(cursor.getString(cursor.getColumnIndex(SUBJECT)));
+                test.setChapter(cursor.getString(cursor.getColumnIndex(CHAPTER)));
+                test.setSections(cursor.getString(cursor.getColumnIndex(SECTIONS)));
+                test.setDataTime(cursor.getString(cursor.getColumnIndex(DATA_TIME)));
+                test.setTotalTime(cursor.getString(cursor.getColumnIndex(TOTAL_TIME)));
+                test.setTotalQuestions(cursor.getString(cursor.getColumnIndex(TOTAL_QUESTIONS)));
+
+                arrayList.add(test);
+                cursor.moveToNext();
+            }
+        }
+        return arrayList;
+    }
     // endregion
 
     // region Questions record manipulation methods

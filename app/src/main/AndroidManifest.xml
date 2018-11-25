@@ -68,10 +68,12 @@
             android:name=".ViewTestsActivity"
             android:label="@string/title_activity_view_tests"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewAllTestsListActivity"
-            android:label="ViewAllTestsListActivity"/>
-        <activity android:name=".ViewClassTestsActivity"
-            android:label="ViewClassTestsActivity"/>
+        <activity
+            android:name=".ViewAllTestsListActivity"
+            android:label="ViewAllTestsListActivity" />
+        <activity
+            android:name=".ViewClassTestsActivity"
+            android:label="ViewClassTestsActivity" />
         <activity
             android:name=".UpdateDeleteTestActivity"
             android:noHistory="true" />
@@ -94,11 +96,11 @@
             android:name=".Activities.StudentClasses.ViewStudentClassesListActivity"
             android:label="@string/title_activity_view_student_classes_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".Activities.StudentClasses.NewStudentClassActivity"
@@ -108,9 +110,20 @@
             android:name=".Activities.StudentClasses.UpdateDeleteStudentClassActivity"
             android:label="Activities.StudentClasses.UpdateDeleteStudentClassActivity" />
         <activity android:name=".Activities.Result.StudentResultsListActivity" />
-        <activity android:name=".Activities.StudentTests.AddStudentTestActivity"
+        <activity
+            android:name=".Activities.StudentTests.AddStudentTestActivity"
             android:label="Activities.StudentTests.AddStudentTestActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
+        <activity
+            android:name=".FirebasePracticeActivity"
+            android:label="@string/title_activity_firebase_practice"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
