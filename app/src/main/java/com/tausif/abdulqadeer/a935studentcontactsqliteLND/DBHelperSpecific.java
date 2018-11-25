@@ -134,7 +134,7 @@ public class DBHelperSpecific {
      * @return
      */
 
-    public ArrayList<Test> getAllTests(){
+    public ArrayList<Test> getAllTests() {
         return dbHelper.getAllTests();
     }
 
@@ -361,6 +361,44 @@ public class DBHelperSpecific {
      * @return
      */
 
+    public ArrayList<Question> getAllQuestions() {
+
+        ArrayList<Question> questionsListForTestId = new ArrayList<>();
+//        testsForId.add("-1");
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String tempQuery = "SELECT  * FROM " + DBHelper.QUESTIONS_TABLE;
+
+        Cursor cursor = db.rawQuery(tempQuery, null);
+        cursor.moveToFirst();
+
+
+        if (cursor.getCount() > 0) {
+            while (cursor.isAfterLast() == false) {
+                Question tempQuestion = new Question();
+
+                int tempQuestionId = cursor.getInt(cursor.getColumnIndex(ID_QUESTIONS_TABLE));
+                String tempQuestionStr = cursor.getString(cursor.getColumnIndex(QUESTION));
+                String tempOptionAStr = cursor.getString(cursor.getColumnIndex(OPTION_A));
+                String tempOptionBStr = cursor.getString(cursor.getColumnIndex(OPTION_B));
+                String tempOptionCStr = cursor.getString(cursor.getColumnIndex(OPTION_C));
+                String tempOptionDStr = cursor.getString(cursor.getColumnIndex(OPTION_D));
+
+                tempQuestion.setQuestionId(tempQuestionId);
+                tempQuestion.setQuestion(tempQuestionStr);
+                tempQuestion.setOptionA(tempOptionAStr);
+                tempQuestion.setOptionB(tempOptionBStr);
+                tempQuestion.setOptionC(tempOptionCStr);
+                tempQuestion.setOptionD(tempOptionDStr);
+
+                questionsListForTestId.add(tempQuestion);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return questionsListForTestId;
+    }
+
     public ArrayList<Question> getAllQuestionFromTestId(int testId) {
 
         ArrayList<Question> questionsListForTestId = new ArrayList<>();
@@ -495,8 +533,7 @@ public class DBHelperSpecific {
      * Methods for student view class
      */
     // This method would get all students belonging to pereterized class
-
-    public Student getStudentFromStudentID(int studentID){
+    public Student getStudentFromStudentID(int studentID) {
         Student student = dbHelper.getStudentsOfWhere(DBHelper.ID_STUDENT_TABLE + "=" + studentID).get(0);
         return student;
     }
@@ -507,7 +544,7 @@ public class DBHelperSpecific {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String tempQuery = "SELECT * FROM " + DBHelper.STUDENT_TABLE ;
+        String tempQuery = "SELECT * FROM " + DBHelper.STUDENT_TABLE;
         Cursor cursor = db.rawQuery(tempQuery, null);
         cursor.moveToFirst();
 
@@ -673,7 +710,7 @@ public class DBHelperSpecific {
         return testArrayList;
     }
 
-    public Test getTestFromID(int testID){
+    public Test getTestFromID(int testID) {
         Test test = dbHelper.getTestsWhere(DBHelper.ID_TEST_TABLE + "=" + testID).get(0);
         return test;
     }
@@ -747,38 +784,41 @@ public class DBHelperSpecific {
     // endregion
 
     // region Exam Table methods
-    public Exam getExamFromExamID(int examID){
+    public Exam getExamFromExamID(int examID) {
         Exam exam = dbHelper.getAllExamWhere(DBHelper.ID_EXAM_TABLE + "=" + examID).get(0);
         return exam;
     }
-    public ArrayList<Exam> getExamsFromTestId(int testID){
+
+    public ArrayList<Exam> getExamsFromTestId(int testID) {
         ArrayList<Exam> exams = dbHelper.getAllExamWhere(DBHelper.EXAM_TEST_ID_F + "=" + testID);
         return exams;
     }
-    public ArrayList<Exam> getExamsFromStudentID(int studentID){
+
+    public ArrayList<Exam> getExamsFromStudentID(int studentID) {
         ArrayList<Exam> exams = dbHelper.getAllExamWhere(DBHelper.EXAM_STUDENT_ID_F + "=" + studentID);
         return exams;
     }
     // endregion
 
     // region Result Table methods
-    public Result getResultOfExamID(int resultID){
+    public Result getResultOfExamID(int resultID) {
         Result result = dbHelper.getResultOfWhere(DBHelper.ID_RESULT_TABLE + "=" + resultID).get(0);
         return result;
     }
-    public ArrayList<Result> getResultOfStudentID(int studentID){
-        ArrayList<Result>  results = dbHelper.getResultOfWhere(DBHelper.RESULT_STUDENT_ID_F + "=" + studentID);
+
+    public ArrayList<Result> getResultOfStudentID(int studentID) {
+        ArrayList<Result> results = dbHelper.getResultOfWhere(DBHelper.RESULT_STUDENT_ID_F + "=" + studentID);
         return results;
     }
 
-    public float getStudentAverageResult(int studentID){
+    public float getStudentAverageResult(int studentID) {
         ArrayList<Result> results = getResultOfStudentID(studentID);
         float totalNumberPercentage = 0;
         for (Result result : results) {
-            totalNumberPercentage= totalNumberPercentage + Float.parseFloat(result.getResultPercentage());
+            totalNumberPercentage = totalNumberPercentage + Float.parseFloat(result.getResultPercentage());
         }
 
-        float overallPercentage = totalNumberPercentage / (float)results.size();
+        float overallPercentage = totalNumberPercentage / (float) results.size();
         return overallPercentage;
     }
 

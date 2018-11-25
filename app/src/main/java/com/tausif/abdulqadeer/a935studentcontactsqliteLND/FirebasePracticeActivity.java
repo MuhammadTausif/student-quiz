@@ -32,7 +32,6 @@ public class FirebasePracticeActivity extends AppCompatActivity {
 
     DatabaseReference mDatabase;
     FirebaseDatabase firebaseDatabase;
-    // ...
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +72,7 @@ public class FirebasePracticeActivity extends AppCompatActivity {
                 uploadStudent();
                 uploadStudentClasses();
                 uploadTests();
+//                uploadQuestions();
                 // endregion
             }
         });
@@ -114,12 +114,6 @@ public class FirebasePracticeActivity extends AppCompatActivity {
                 }
             });
         }
-
-//                Map<String, Object> resultMap = new HashMap<String, Object>();
-//                resultMap.put("uid", "123");
-//                resultMap.put("author", "Aslam");
-//
-//                mDatabase.child("37230015").updateChildren(resultMap);
     }
 
     public void uploadStudentClasses() {
@@ -156,8 +150,92 @@ public class FirebasePracticeActivity extends AppCompatActivity {
 
     public void uploadTests() {
         ArrayList<Test> tests = new ArrayList<Test>();
+        ArrayList<Question> questions = new ArrayList<Question>();
+
         DBHelperSpecific dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
         tests = dbHelperSpecific.getAllTests();
+        Map<String, Object> testsMap = new HashMap<String, Object>();
+        Map<String, Object> questionsMap = new HashMap<String, Object>();
+
+        for (Test test : tests) {
+            testsMap.put("_id", test.get_id());
+            testsMap.put("class_test", test.getClassTest());
+            testsMap.put("subject", test.getSubject());
+            testsMap.put("chapter", test.getChapter());
+            testsMap.put("sections", test.getSections());
+            testsMap.put("data_time", test.getDataTime());
+            testsMap.put("total_time", test.getTotalTime());
+            testsMap.put("total_questions", test.getTotalQuestions());
+
+            mDatabase.child("37230015")
+                    .child("studentClasses")
+                    .child(test.getClassTest())
+                    .child("subjects")
+                    .child(test.getSubject())
+                    .child("chapters")
+                    .child(test.getChapter())
+                    .child("section")
+                    .child(test.getSections())
+                    .updateChildren(testsMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // Write was successful!
+                    // ...
+                    Log.d("LND", "Data insertion Completed");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // Write failed
+                    // ...
+                    Log.e("LND", "Data insertion Not completed");
+                }
+            });
+            questions = dbHelperSpecific.getAllQuestionFromTestId(test.get_id());
+            for (Question question : questions) {
+                questionsMap.put("questionID", question.getQuestionId());
+                questionsMap.put("question", question.getQuestion());
+                questionsMap.put("optionA", question.getOptionA());
+                questionsMap.put("optionB", question.getOptionB());
+                questionsMap.put("optionC", question.getOptionC());
+                questionsMap.put("optionD", question.getOptionD());
+
+                mDatabase.child("37230015")
+                        .child("studentClasses")
+                        .child(test.getClassTest())
+                        .child("subjects")
+                        .child(test.getSubject())
+                        .child("chapters")
+                        .child(test.getChapter())
+                        .child("section")
+                        .child(test.getSections())
+                        .child("questions")
+                        .child(Integer.toString(question.getQuestionId()))
+                        .updateChildren(questionsMap);
+            }
+        }
+
+//                Map<String, Object> resultMap = new HashMap<String, Object>();
+//                resultMap.put("uid", "123");
+//                resultMap.put("author", "Aslam");
+//
+//                mDatabase.child("37230015").updateChildren(resultMap);
+    }
+
+    public void uploadQuestions() {
+        ArrayList<Test> tests = new ArrayList<Test>();
+        ArrayList<Question> questions = new ArrayList<Question>();
+        DBHelperSpecific dbHelperSpecific = new DBHelperSpecific(getApplicationContext());
+        tests = dbHelperSpecific.getAllTests();
+        questions = dbHelperSpecific.getAllQuestions();
+
+        for (Question question : questions) {
+            mDatabase.child("37230015")
+                    .child("questions")
+                    .child(Integer.toString(question.getQuestionId()))
+                    .setValue(question);
+        }
+
         Map<String, Object> testsMap = new HashMap<String, Object>();
         for (Test test : tests) {
             testsMap.put("_id", test.get_id());
